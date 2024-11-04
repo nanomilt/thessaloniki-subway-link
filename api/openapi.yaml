@@ -1,0 +1,2515 @@
+openapi: 3.0.3
+info:
+  title: TSL - Thessaloniki Subway Link
+  version: "1.0"
+servers:
+- url: https://tsl-metro.gr
+tags:
+- name: user
+  description: Information about the user
+- name: station
+  description: Information about metro stations
+- name: line
+  description: Information about metro lines
+- name: announcement
+  description: Information about urgent changes and latest announcements
+- name: product
+  description: Information about products
+- name: cart
+  description: Information about users'' products'' cart.
+- name: favorites
+  description: Information about user''s favorites lines and stations
+- name: journey
+  description: Information about planned journeys
+paths:
+  /login:
+    post:
+      tags:
+      - user
+      summary: Sign-in to the system
+      description: Enter the system as a registered user
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/login_body'
+      x-swagger-router-controller: User
+  /signup:
+    post:
+      tags:
+      - user
+      summary: Register to the system
+      description: "By providing a username, a password, and an email, register to\
+        \ the system"
+      operationId: signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/signup_body'
+        required: true
+      responses:
+        "201":
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/signup_body'
+      x-swagger-router-controller: User
+  /user/{user-id}/profile:
+    get:
+      tags:
+      - user
+      summary: Return the profile of the user
+      description: "Given the signed in user''s ID, return their profile attributes"
+      operationId: getUserEntity
+      parameters:
+      - name: user-id
+        in: path
+        description: The ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/signup_body'
+      x-swagger-router-controller: User
+    put:
+      tags:
+      - user
+      summary: Edit the profile of the user
+      description: Edit the user''s attributes.
+      operationId: setUserAttributes
+      parameters:
+      - name: user-id
+        in: path
+        description: The ID of the user to be modified
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userid_profile_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userid_profile_body'
+      x-swagger-router-controller: User
+  /station:
+    post:
+      tags:
+      - station
+      summary: Create a new station
+      description: Create a new station
+      operationId: StationEntity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/station_body'
+        required: true
+      responses:
+        "201":
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+      x-swagger-router-controller: Station
+  /station/{station-id}:
+    get:
+      tags:
+      - station
+      summary: Return an existing station
+      description: Return an existing station
+      operationId: getStationEntity
+      parameters:
+      - name: station-id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+      x-swagger-router-controller: Station
+    put:
+      tags:
+      - station
+      summary: Edit an existing station
+      description: Edit an existing station
+      operationId: setStationAttributes
+      parameters:
+      - name: station-id
+        in: path
+        description: The ID of the station to be modified
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/station_stationid_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+      x-swagger-router-controller: Station
+    delete:
+      tags:
+      - station
+      summary: Delete an existing station
+      description: Delete an existing station
+      operationId: "~StationEntity"
+      parameters:
+      - name: station-id
+        in: path
+        description: The ID of the station to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+      x-swagger-router-controller: Station
+  /station/{station-id}/arrivals:
+    get:
+      tags:
+      - station
+      summary: Return the arrivals of an existing station
+      description: Return the arrivals of an existing station
+      operationId: getStationArrivals
+      parameters:
+      - name: station-id
+        in: path
+        description: The ID of the station
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                description: An array containing the estimated arrival time of each
+                  line passing through the station along with the lines'' names
+                example:
+                - 00-02
+                - 00-09
+                items:
+                  type: array
+                  items:
+                    type: string
+                    format: time-minute
+                x-content-type: application/json
+      x-swagger-router-controller: Station
+  /station/{station-id}/connections:
+    get:
+      tags:
+      - station
+      summary: Return the connections of an existing station
+      description: Return the connections of an existing station
+      operationId: getStationConnections
+      parameters:
+      - name: station-id
+        in: path
+        description: The ID of the station
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                description: An array of the lines passing throught the station
+                items:
+                  $ref: '#/components/schemas/station_lines'
+                x-content-type: application/json
+      x-swagger-router-controller: Station
+  /line:
+    post:
+      tags:
+      - line
+      summary: Create a new line
+      description: Create a new line
+      operationId: LineEntity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/line_body'
+        required: true
+      responses:
+        "201":
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line_body'
+      x-swagger-router-controller: Line
+  /line/{line-id}:
+    get:
+      tags:
+      - line
+      summary: Return an existing line
+      description: Return an existing line
+      operationId: getLineEntity
+      parameters:
+      - name: line-id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line_body'
+      x-swagger-router-controller: Line
+    put:
+      tags:
+      - line
+      summary: Edit an existing line
+      description: Edit an existing line
+      operationId: setLineAttributes
+      parameters:
+      - name: line-id
+        in: path
+        description: The ID of the line to be modified
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/line_lineid_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line_lineid_body'
+      x-swagger-router-controller: Line
+    delete:
+      tags:
+      - line
+      summary: Delete an existing line
+      description: Delete an existing line
+      operationId: "~LineEntity"
+      parameters:
+      - name: line-id
+        in: path
+        description: The ID of the line to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line_lineid_body'
+      x-swagger-router-controller: Line
+  /line/{line-id}/stations:
+    get:
+      tags:
+      - line
+      summary: Return the stations of an existing line
+      description: Return the stations of an existing line
+      operationId: getLineStations
+      parameters:
+      - name: line-id
+        in: path
+        description: The ID of the line
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                description: An array containing all the stations that a line pass
+                  throught
+                items:
+                  type: string
+                  description: Station''s name
+                  example: Venizelou
+                x-content-type: application/json
+      x-swagger-router-controller: Line
+  /line/{line-id}/timetable:
+    get:
+      tags:
+      - line
+      summary: Return the timetable of an existing line
+      description: Return the timetable of an existing line
+      operationId: getLineTimetable
+      parameters:
+      - name: line-id
+        in: path
+        description: The ID of the line
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                description: A 2D array containing the starting times of a line from
+                  its starting and ending station
+                example:
+                - - 10:00
+                  - 10:30
+                - - 10:10
+                  - 10:20
+                items:
+                  type: array
+                  items:
+                    type: string
+                    format: time-minute
+                x-content-type: application/json
+      x-swagger-router-controller: Line
+  /line/{line-id}/stations-map:
+    get:
+      tags:
+      - line
+      summary: Return the stations'' map for a line
+      description: Return the stations'' map for a line
+      operationId: getLineStationsMap
+      parameters:
+      - name: line-id
+        in: path
+        description: The ID of the line
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The line''s stations depicted on a map
+                example: BlueLine.png
+                items:
+                  type: string
+                  format: byte
+                x-content-type: application/json
+      x-swagger-router-controller: Line
+  /line/{line-id}/live-tracking:
+    get:
+      tags:
+      - line
+      summary: Return the live position of railcars for a specific line
+      description: Return the live position of railcars for a specific line
+      operationId: getLineLiveTracking
+      parameters:
+      - name: line-id
+        in: path
+        description: The ID of the line
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Live position of railcars on a map
+                example:
+                - "40.6297373"
+                - "22.9579498"
+                items:
+                  type: string
+                x-content-type: application/json
+      x-swagger-router-controller: Line
+  /announcement:
+    post:
+      tags:
+      - announcement
+      summary: Create a new announcement
+      description: Create a new announcement
+      operationId: AnnouncementEntity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/announcement_body'
+        required: true
+      responses:
+        "201":
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/announcement_body'
+      x-swagger-router-controller: Announcement
+  /announcement/{announcement-id}:
+    get:
+      tags:
+      - announcement
+      summary: Return an existing announcement
+      description: Return an existing announcement
+      operationId: getAnnouncementEntity
+      parameters:
+      - name: announcement-id
+        in: path
+        description: The ID ot the announcement
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/announcement_body'
+      x-swagger-router-controller: Announcement
+    put:
+      tags:
+      - announcement
+      summary: Edit an existing announcement
+      description: Edit an existing announcement
+      operationId: setAnnouncementAttributes
+      parameters:
+      - name: announcement-id
+        in: path
+        description: The ID of the announcement to be modified
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/announcement_announcementid_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/announcement_announcementid_body'
+      x-swagger-router-controller: Announcement
+    delete:
+      tags:
+      - announcement
+      summary: Delete an existing announcement
+      description: Delete an existing announcement
+      operationId: "~AnnouncementEntity"
+      parameters:
+      - name: announcement-id
+        in: path
+        description: The ID of the announcement to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/announcement_announcementid_body'
+      x-swagger-router-controller: Announcement
+  /product:
+    post:
+      tags:
+      - product
+      summary: Create a new product
+      description: Create a new product
+      operationId: ProductEntity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product_body'
+        required: true
+      responses:
+        "201":
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product_body'
+      x-swagger-router-controller: Product
+  /product/{product-id}:
+    get:
+      tags:
+      - product
+      summary: Return an existing product
+      description: Return an existing product
+      operationId: getProductEntity
+      parameters:
+      - name: product-id
+        in: path
+        description: The ID of the product
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product_body'
+      x-swagger-router-controller: Product
+    put:
+      tags:
+      - product
+      summary: Edit an existing product
+      description: Edit an existing product
+      operationId: setProductAttributes
+      parameters:
+      - name: product-id
+        in: path
+        description: The ID of the product to be modified
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product_productid_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product_productid_body'
+      x-swagger-router-controller: Product
+    delete:
+      tags:
+      - product
+      summary: Delete an existing product
+      description: Delete an existing product
+      operationId: "~ProductEntity"
+      parameters:
+      - name: product-id
+        in: path
+        description: The ID of the product to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product_productid_body'
+      x-swagger-router-controller: Product
+  /user/{user-id}/cart:
+    get:
+      tags:
+      - cart
+      summary: Return a user''s cart
+      description: Return a user''s cart
+      operationId: getCartEntity
+      parameters:
+      - name: user-id
+        in: path
+        description: The ID of a user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      x-swagger-router-controller: Cart
+    put:
+      tags:
+      - cart
+      summary: Edit a user''s cart
+      description: Edit a user''s cart
+      operationId: setCartAttributes
+      parameters:
+      - name: user-id
+        in: path
+        description: The ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userid_cart_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      x-swagger-router-controller: Cart
+    post:
+      tags:
+      - cart
+      summary: Create a user''s cart
+      description: Create a user''s cart
+      operationId: CartEntity
+      parameters:
+      - name: user-id
+        in: path
+        description: The ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userid_cart_body_1'
+        required: true
+      responses:
+        "201":
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      x-swagger-router-controller: Cart
+  /user/{user-id}/cart/product/{product-id}:
+    put:
+      tags:
+      - cart
+      summary: Edit a user''s product quantity in the cart
+      description: Edit a user''s product quantity in the cart
+      operationId: setCartProductAttribute
+      parameters:
+      - name: user-id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: product-id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product_productid_body_1'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      x-swagger-router-controller: Cart
+  /confirm:
+    post:
+      tags:
+      - cart
+      summary: Confirm a payment process
+      description: Confirm a payment process
+      operationId: confirmPOST
+      parameters:
+      - name: user-id
+        in: query
+        description: The ID of the user defining the corresponding cart
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/confirm_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+      x-swagger-router-controller: Cart
+  /confirm/generate:
+    post:
+      tags:
+      - cart
+      summary: Generate QR codes for pruchased items
+      description: Generate QR codes for purchased items
+      operationId: confirmGeneratePOST
+      parameters:
+      - name: user-id
+        in: query
+        description: The ID of the user defining the corresponding cart
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/confirm_generate_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userid_profile_body'
+      x-swagger-router-controller: Cart
+  /user/{user-id}/favorites:
+    delete:
+      tags:
+      - favorites
+      summary: Remove a line or station from favorites
+      description: Remove a line or station from favorites
+      operationId: userUser_idFavoritesDELETE
+      parameters:
+      - name: user-id
+        in: path
+        description: The ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+      x-swagger-router-controller: Favorites
+  /journey/search:
+    post:
+      tags:
+      - journey
+      summary: Plan a journey
+      description: Plan a journey
+      operationId: planJourney
+      parameters:
+      - name: dep-station
+        in: query
+        description: The ID of the departure station
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: arr-station
+        in: query
+        description: The ID of the arrival station
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: dep-time
+        in: query
+        description: The preferred departure time
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: partial-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/journey_search_body'
+        required: true
+      responses:
+        "201":
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+      x-swagger-router-controller: Journey
+components:
+  schemas:
+    User:
+      required:
+      - email
+      - password
+      - user-id
+      - username
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: The ID of the user
+          format: int32
+          example: 4221
+        is-guest:
+          type: boolean
+          description: Variable indicating whether the user is signed-in as guest
+            or not
+          example: false
+        email:
+          type: string
+          description: The email used by the user during signup
+          example: klpanagi@ece.auth.gr
+        username:
+          type: string
+          description: The name assigned to the user
+          example: klpanagi
+        password:
+          type: string
+          description: The password used by the user to sign in
+          example: SoftEng2024!
+    Station:
+      required:
+      - lines
+      - name
+      - position
+      - station-id
+      type: object
+      properties:
+        station-id:
+          type: integer
+          description: The ID of a station
+          format: int32
+          example: 0
+        name:
+          type: string
+          description: Station''s name
+          example: Venizelou
+        position:
+          type: array
+          description: The station''s position defined by its geographical longitude
+            and latitude
+          example:
+          - "40.6370981"
+          - "22.9392805"
+          items:
+            maxItems: 2
+            minItems: 2
+            type: string
+        lines:
+          type: array
+          description: An array of the lines passing throught the station
+          items:
+            $ref: '#/components/schemas/line_lineid_body'
+        eta:
+          type: array
+          description: An array containing the estimated arrival time of each line
+            passing through the station along with the lines'' names
+          example:
+          - 00-02
+          - 00-09
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether the station is marked as favorite
+          example: false
+    Line:
+      required:
+      - line-id
+      - name
+      - stations
+      - stations-map
+      - timetable
+      type: object
+      properties:
+        line-id:
+          type: integer
+          description: The ID of a line
+          format: int32
+          example: 1
+        name:
+          type: string
+          description: Line''s name
+          example: Blue Line
+        stations:
+          type: array
+          description: An array containing all the stations that a line pass throught
+          items:
+            type: string
+            description: Station''s name
+            example: Venizelou
+        timetable:
+          type: array
+          description: A 2D array containing the starting times of a line from its
+            starting and ending station
+          example:
+          - - 10:00
+            - 10:30
+          - - 10:10
+            - 10:20
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether a line is marked as favorite
+          example: false
+        stations-map:
+          type: array
+          description: The line''s stations depicted on a map
+          example: BlueLine.png
+          items:
+            type: string
+            format: byte
+        live-tracking:
+          type: array
+          description: Live position of railcars on a map
+          example:
+          - "40.6297373"
+          - "22.9579498"
+          items:
+            type: string
+    Announcement:
+      required:
+      - announcement-id
+      - body
+      - title
+      - upload-date
+      type: object
+      properties:
+        announcement-id:
+          type: integer
+          description: The ID of an announcement
+          format: int32
+          example: 154
+        title:
+          type: string
+          description: The announcement''s title
+          example: Venizelou station
+        body:
+          type: string
+          description: The announcement''s body
+          example: Venizelou station will remain closed due to maintenance
+        upload-date:
+          type: string
+          description: The announcement''s upload date and time
+          format: date-time
+    Favorites:
+      type: object
+      properties:
+        stationsNlines:
+          type: array
+          description: A list containing lines and stations that are marked as favorites
+          items:
+            anyOf:
+            - required:
+              - line-id
+              - name
+              - stations
+              - stations-map
+              - timetable
+              type: object
+              properties:
+                line-id:
+                  type: integer
+                  description: The ID of a line
+                  format: int32
+                  example: 1
+                name:
+                  type: string
+                  description: Line''s name
+                  example: Blue Line
+                stations:
+                  type: array
+                  description: An array containing all the stations that a line pass
+                    throught
+                  items:
+                    type: string
+                    description: Station''s name
+                    example: Venizelou
+                timetable:
+                  type: array
+                  description: A 2D array containing the starting times of a line
+                    from its starting and ending station
+                  example:
+                  - - 10:00
+                    - 10:30
+                  - - 10:10
+                    - 10:20
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      format: time-minute
+                is-favorite:
+                  type: boolean
+                  description: A variable indicating whether a line is marked as favorite
+                  example: false
+                stations-map:
+                  type: array
+                  description: The line''s stations depicted on a map
+                  example: BlueLine.png
+                  items:
+                    type: string
+                    format: byte
+                live-tracking:
+                  type: array
+                  description: Live position of railcars on a map
+                  example:
+                  - "40.6297373"
+                  - "22.9579498"
+                  items:
+                    type: string
+            - required:
+              - lines
+              - name
+              - position
+              - station-id
+              type: object
+              properties:
+                station-id:
+                  type: integer
+                  description: The ID of a station
+                  format: int32
+                  example: 0
+                name:
+                  type: string
+                  description: Station''s name
+                  example: Venizelou
+                position:
+                  type: array
+                  description: The station''s position defined by its geographical
+                    longitude and latitude
+                  example:
+                  - "40.6370981"
+                  - "22.9392805"
+                  items:
+                    maxItems: 2
+                    minItems: 2
+                    type: string
+                lines:
+                  type: array
+                  description: An array of the lines passing throught the station
+                  items:
+                    required:
+                    - line-id
+                    - name
+                    - stations
+                    - stations-map
+                    - timetable
+                    type: object
+                    properties:
+                      line-id:
+                        type: integer
+                        description: The ID of a line
+                        format: int32
+                        example: 1
+                      name:
+                        type: string
+                        description: Line''s name
+                        example: Blue Line
+                      stations:
+                        type: array
+                        description: An array containing all the stations that a line
+                          pass throught
+                        items:
+                          type: string
+                          description: Station''s name
+                          example: Venizelou
+                      timetable:
+                        type: array
+                        description: A 2D array containing the starting times of a
+                          line from its starting and ending station
+                        example:
+                        - - 10:00
+                          - 10:30
+                        - - 10:10
+                          - 10:20
+                        items:
+                          type: array
+                          items:
+                            type: string
+                            format: time-minute
+                      is-favorite:
+                        type: boolean
+                        description: A variable indicating whether a line is marked
+                          as favorite
+                        example: false
+                      stations-map:
+                        type: array
+                        description: The line''s stations depicted on a map
+                        example: BlueLine.png
+                        items:
+                          type: string
+                          format: byte
+                      live-tracking:
+                        type: array
+                        description: Live position of railcars on a map
+                        example:
+                        - "40.6297373"
+                        - "22.9579498"
+                        items:
+                          type: string
+                eta:
+                  type: array
+                  description: An array containing the estimated arrival time of each
+                    line passing through the station along with the lines'' names
+                  example:
+                  - 00-02
+                  - 00-09
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      format: time-minute
+                is-favorite:
+                  type: boolean
+                  description: A variable indicating whether the station is marked
+                    as favorite
+                  example: false
+    Product:
+      required:
+      - name
+      - price
+      - product-id
+      type: object
+      properties:
+        product-id:
+          type: integer
+          description: The ID of a product
+          format: int32
+          example: 14
+        name:
+          type: string
+          description: The name of a product
+          example: 3-day ticket
+        price:
+          minimum: 0
+          type: number
+          description: The price of a product
+          format: float
+          example: 8.99
+        quantity:
+          minimum: 0
+          type: integer
+          description: The quantity of a selected product
+          format: int32
+          example: 3
+    Cart:
+      required:
+      - user-id
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: "The ID of a cart, foreign key to the user entity"
+          format: int32
+        total-price:
+          minimum: 0
+          type: number
+          description: The total price of the products in the cart
+          format: float
+          example: 32.5
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/product_productid_body'
+    login_body:
+      required:
+      - email
+      - password
+      - user-id
+      - username
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: The ID of the user
+          format: int32
+          example: 4221
+        is-guest:
+          type: boolean
+          description: Variable indicating whether the user is signed-in as guest
+            or not
+          example: false
+        email:
+          type: string
+          description: The email used by the user during signup
+          example: klpanagi@ece.auth.gr
+        username:
+          type: string
+          description: The name assigned to the user
+          example: klpanagi
+        password:
+          type: string
+          description: The password used by the user to sign in
+          example: SoftEng2024!
+      example:
+        is-guest: false
+        password: SoftEng2024!
+        user-id: 4221
+        email: klpanagi@ece.auth.gr
+        username: klpanagi
+    signup_body:
+      required:
+      - email
+      - password
+      - user-id
+      - username
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: The ID of the user
+          format: int32
+          example: 4221
+        is-guest:
+          type: boolean
+          description: Variable indicating whether the user is signed-in as guest
+            or not
+          example: false
+        email:
+          type: string
+          description: The email used by the user during signup
+          example: klpanagi@ece.auth.gr
+        username:
+          type: string
+          description: The name assigned to the user
+          example: klpanagi
+        password:
+          type: string
+          description: The password used by the user to sign in
+          example: SoftEng2024!
+      example:
+        is-guest: false
+        password: SoftEng2024!
+        user-id: 4221
+        email: klpanagi@ece.auth.gr
+        username: klpanagi
+    userid_profile_body:
+      required:
+      - email
+      - password
+      - user-id
+      - username
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: The ID of the user
+          format: int32
+          example: 4221
+        is-guest:
+          type: boolean
+          description: Variable indicating whether the user is signed-in as guest
+            or not
+          example: false
+        email:
+          type: string
+          description: The email used by the user during signup
+          example: klpanagi@ece.auth.gr
+        username:
+          type: string
+          description: The name assigned to the user
+          example: klpanagi
+        password:
+          type: string
+          description: The password used by the user to sign in
+          example: SoftEng2024!
+      example:
+        is-guest: false
+        password: SoftEng2024!
+        user-id: 4221
+        email: klpanagi@ece.auth.gr
+        username: klpanagi
+    station_lines:
+      required:
+      - line-id
+      - name
+      - stations
+      - stations-map
+      - timetable
+      type: object
+      properties:
+        line-id:
+          type: integer
+          description: The ID of a line
+          format: int32
+          example: 1
+        name:
+          type: string
+          description: Line''s name
+          example: Blue Line
+        stations:
+          type: array
+          description: An array containing all the stations that a line pass throught
+          items:
+            type: string
+            description: Station''s name
+            example: Venizelou
+        timetable:
+          type: array
+          description: A 2D array containing the starting times of a line from its
+            starting and ending station
+          example:
+          - - 10:00
+            - 10:30
+          - - 10:10
+            - 10:20
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether a line is marked as favorite
+          example: false
+        stations-map:
+          type: array
+          description: The line''s stations depicted on a map
+          example: BlueLine.png
+          items:
+            type: string
+            format: byte
+        live-tracking:
+          type: array
+          description: Live position of railcars on a map
+          example:
+          - "40.6297373"
+          - "22.9579498"
+          items:
+            type: string
+      example:
+        live-tracking:
+        - "40.6297373"
+        - "22.9579498"
+        name: Blue Line
+        stations:
+        - Venizelou
+        - Venizelou
+        is-favorite: false
+        stations-map: BlueLine.png
+        line-id: 1
+        timetable:
+        - - 10:00
+          - 10:30
+        - - 10:10
+          - 10:20
+    station_body:
+      required:
+      - lines
+      - name
+      - position
+      - station-id
+      type: object
+      properties:
+        station-id:
+          type: integer
+          description: The ID of a station
+          format: int32
+          example: 0
+        name:
+          type: string
+          description: Station''s name
+          example: Venizelou
+        position:
+          type: array
+          description: The station''s position defined by its geographical longitude
+            and latitude
+          example:
+          - "40.6370981"
+          - "22.9392805"
+          items:
+            maxItems: 2
+            minItems: 2
+            type: string
+        lines:
+          type: array
+          description: An array of the lines passing throught the station
+          items:
+            $ref: '#/components/schemas/station_lines'
+        eta:
+          type: array
+          description: An array containing the estimated arrival time of each line
+            passing through the station along with the lines'' names
+          example:
+          - 00-02
+          - 00-09
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether the station is marked as favorite
+          example: false
+    inline_response_201:
+      required:
+      - lines
+      - name
+      - position
+      - station-id
+      type: object
+      properties:
+        station-id:
+          type: integer
+          description: The ID of a station
+          format: int32
+          example: 0
+        name:
+          type: string
+          description: Station''s name
+          example: Venizelou
+        position:
+          type: array
+          description: The station''s position defined by its geographical longitude
+            and latitude
+          example:
+          - "40.6370981"
+          - "22.9392805"
+          items:
+            maxItems: 2
+            minItems: 2
+            type: string
+        lines:
+          type: array
+          description: An array of the lines passing throught the station
+          items:
+            $ref: '#/components/schemas/line_lineid_body'
+        eta:
+          type: array
+          description: An array containing the estimated arrival time of each line
+            passing through the station along with the lines'' names
+          example:
+          - 00-02
+          - 00-09
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether the station is marked as favorite
+          example: false
+      example:
+        eta:
+        - 00-02
+        - 00-09
+        station-id: 0
+        name: Venizelou
+        position:
+        - "40.6370981"
+        - "22.9392805"
+        is-favorite: false
+        lines:
+        - live-tracking:
+          - "40.6297373"
+          - "22.9579498"
+          name: Blue Line
+          stations:
+          - Venizelou
+          - Venizelou
+          is-favorite: false
+          stations-map: BlueLine.png
+          line-id: 1
+          timetable:
+          - - 10:00
+            - 10:30
+          - - 10:10
+            - 10:20
+        - live-tracking:
+          - "40.6297373"
+          - "22.9579498"
+          name: Blue Line
+          stations:
+          - Venizelou
+          - Venizelou
+          is-favorite: false
+          stations-map: BlueLine.png
+          line-id: 1
+          timetable:
+          - - 10:00
+            - 10:30
+          - - 10:10
+            - 10:20
+    station_stationid_body:
+      required:
+      - lines
+      - name
+      - position
+      - station-id
+      type: object
+      properties:
+        station-id:
+          type: integer
+          description: The ID of a station
+          format: int32
+          example: 0
+        name:
+          type: string
+          description: Station''s name
+          example: Venizelou
+        position:
+          type: array
+          description: The station''s position defined by its geographical longitude
+            and latitude
+          example:
+          - "40.6370981"
+          - "22.9392805"
+          items:
+            maxItems: 2
+            minItems: 2
+            type: string
+        lines:
+          type: array
+          description: An array of the lines passing throught the station
+          items:
+            $ref: '#/components/schemas/station_lines'
+        eta:
+          type: array
+          description: An array containing the estimated arrival time of each line
+            passing through the station along with the lines'' names
+          example:
+          - 00-02
+          - 00-09
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether the station is marked as favorite
+          example: false
+    line_body:
+      required:
+      - line-id
+      - name
+      - stations
+      - stations-map
+      - timetable
+      type: object
+      properties:
+        line-id:
+          type: integer
+          description: The ID of a line
+          format: int32
+          example: 1
+        name:
+          type: string
+          description: Line''s name
+          example: Blue Line
+        stations:
+          type: array
+          description: An array containing all the stations that a line pass throught
+          items:
+            type: string
+            description: Station''s name
+            example: Venizelou
+        timetable:
+          type: array
+          description: A 2D array containing the starting times of a line from its
+            starting and ending station
+          example:
+          - - 10:00
+            - 10:30
+          - - 10:10
+            - 10:20
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether a line is marked as favorite
+          example: false
+        stations-map:
+          type: array
+          description: The line''s stations depicted on a map
+          example: BlueLine.png
+          items:
+            type: string
+            format: byte
+        live-tracking:
+          type: array
+          description: Live position of railcars on a map
+          example:
+          - "40.6297373"
+          - "22.9579498"
+          items:
+            type: string
+      example:
+        live-tracking:
+        - "40.6297373"
+        - "22.9579498"
+        name: Blue Line
+        stations:
+        - Venizelou
+        - Venizelou
+        is-favorite: false
+        stations-map: BlueLine.png
+        line-id: 1
+        timetable:
+        - - 10:00
+          - 10:30
+        - - 10:10
+          - 10:20
+    line_lineid_body:
+      required:
+      - line-id
+      - name
+      - stations
+      - stations-map
+      - timetable
+      type: object
+      properties:
+        line-id:
+          type: integer
+          description: The ID of a line
+          format: int32
+          example: 1
+        name:
+          type: string
+          description: Line''s name
+          example: Blue Line
+        stations:
+          type: array
+          description: An array containing all the stations that a line pass throught
+          items:
+            type: string
+            description: Station''s name
+            example: Venizelou
+        timetable:
+          type: array
+          description: A 2D array containing the starting times of a line from its
+            starting and ending station
+          example:
+          - - 10:00
+            - 10:30
+          - - 10:10
+            - 10:20
+          items:
+            type: array
+            items:
+              type: string
+              format: time-minute
+        is-favorite:
+          type: boolean
+          description: A variable indicating whether a line is marked as favorite
+          example: false
+        stations-map:
+          type: array
+          description: The line''s stations depicted on a map
+          example: BlueLine.png
+          items:
+            type: string
+            format: byte
+        live-tracking:
+          type: array
+          description: Live position of railcars on a map
+          example:
+          - "40.6297373"
+          - "22.9579498"
+          items:
+            type: string
+      example:
+        live-tracking:
+        - "40.6297373"
+        - "22.9579498"
+        name: Blue Line
+        stations:
+        - Venizelou
+        - Venizelou
+        is-favorite: false
+        stations-map: BlueLine.png
+        line-id: 1
+        timetable:
+        - - 10:00
+          - 10:30
+        - - 10:10
+          - 10:20
+    announcement_body:
+      required:
+      - announcement-id
+      - body
+      - title
+      - upload-date
+      type: object
+      properties:
+        announcement-id:
+          type: integer
+          description: The ID of an announcement
+          format: int32
+          example: 154
+        title:
+          type: string
+          description: The announcement''s title
+          example: Venizelou station
+        body:
+          type: string
+          description: The announcement''s body
+          example: Venizelou station will remain closed due to maintenance
+        upload-date:
+          type: string
+          description: The announcement''s upload date and time
+          format: date-time
+      example:
+        announcement-id: 154
+        upload-date: 2000-01-23T04:56:07.000+00:00
+        title: Venizelou station
+        body: Venizelou station will remain closed due to maintenance
+    announcement_announcementid_body:
+      required:
+      - announcement-id
+      - body
+      - title
+      - upload-date
+      type: object
+      properties:
+        announcement-id:
+          type: integer
+          description: The ID of an announcement
+          format: int32
+          example: 154
+        title:
+          type: string
+          description: The announcement''s title
+          example: Venizelou station
+        body:
+          type: string
+          description: The announcement''s body
+          example: Venizelou station will remain closed due to maintenance
+        upload-date:
+          type: string
+          description: The announcement''s upload date and time
+          format: date-time
+      example:
+        announcement-id: 154
+        upload-date: 2000-01-23T04:56:07.000+00:00
+        title: Venizelou station
+        body: Venizelou station will remain closed due to maintenance
+    product_body:
+      required:
+      - name
+      - price
+      - product-id
+      type: object
+      properties:
+        product-id:
+          type: integer
+          description: The ID of a product
+          format: int32
+          example: 14
+        name:
+          type: string
+          description: The name of a product
+          example: 3-day ticket
+        price:
+          minimum: 0
+          type: number
+          description: The price of a product
+          format: float
+          example: 8.99
+        quantity:
+          minimum: 0
+          type: integer
+          description: The quantity of a selected product
+          format: int32
+          example: 3
+      example:
+        quantity: 3
+        product-id: 14
+        price: 8.99
+        name: 3-day ticket
+    product_productid_body:
+      required:
+      - name
+      - price
+      - product-id
+      type: object
+      properties:
+        product-id:
+          type: integer
+          description: The ID of a product
+          format: int32
+          example: 14
+        name:
+          type: string
+          description: The name of a product
+          example: 3-day ticket
+        price:
+          minimum: 0
+          type: number
+          description: The price of a product
+          format: float
+          example: 8.99
+        quantity:
+          minimum: 0
+          type: integer
+          description: The quantity of a selected product
+          format: int32
+          example: 3
+      example:
+        quantity: 3
+        product-id: 14
+        price: 8.99
+        name: 3-day ticket
+    inline_response_200:
+      allOf:
+      - required:
+        - user-id
+        type: object
+        properties:
+          user-id:
+            type: integer
+            description: "The ID of a cart, foreign key to the user entity"
+            format: int32
+          total-price:
+            minimum: 0
+            type: number
+            description: The total price of the products in the cart
+            format: float
+            example: 32.5
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/product_productid_body'
+    userid_cart_body:
+      allOf:
+      - required:
+        - user-id
+        type: object
+        properties:
+          user-id:
+            type: integer
+            description: "The ID of a cart, foreign key to the user entity"
+            format: int32
+          total-price:
+            minimum: 0
+            type: number
+            description: The total price of the products in the cart
+            format: float
+            example: 32.5
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/product_productid_body'
+    userid_cart_body_1:
+      allOf:
+      - required:
+        - user-id
+        type: object
+        properties:
+          user-id:
+            type: integer
+            description: "The ID of a cart, foreign key to the user entity"
+            format: int32
+          total-price:
+            minimum: 0
+            type: number
+            description: The total price of the products in the cart
+            format: float
+            example: 32.5
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/product_productid_body'
+    product_productid_body_1:
+      allOf:
+      - required:
+        - user-id
+        type: object
+        properties:
+          user-id:
+            type: integer
+            description: "The ID of a cart, foreign key to the user entity"
+            format: int32
+          total-price:
+            minimum: 0
+            type: number
+            description: The total price of the products in the cart
+            format: float
+            example: 32.5
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/product_productid_body'
+    confirm_body:
+      required:
+      - user-id
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: "The ID of a cart, foreign key to the user entity"
+          format: int32
+        total-price:
+          minimum: 0
+          type: number
+          description: The total price of the products in the cart
+          format: float
+          example: 32.5
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/product_productid_body'
+    inline_response_200_1:
+      required:
+      - user-id
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: "The ID of a cart, foreign key to the user entity"
+          format: int32
+        total-price:
+          minimum: 0
+          type: number
+          description: The total price of the products in the cart
+          format: float
+          example: 32.5
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/product_productid_body'
+      example:
+        user-id: 0
+        total-price: 32.5
+        products:
+        - quantity: 3
+          product-id: 14
+          price: 8.99
+          name: 3-day ticket
+        - quantity: 3
+          product-id: 14
+          price: 8.99
+          name: 3-day ticket
+    confirm_generate_body:
+      required:
+      - user-id
+      type: object
+      properties:
+        user-id:
+          type: integer
+          description: "The ID of a cart, foreign key to the user entity"
+          format: int32
+        total-price:
+          minimum: 0
+          type: number
+          description: The total price of the products in the cart
+          format: float
+          example: 32.5
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/product_productid_body'
+    inline_response_200_2:
+      type: object
+      properties:
+        stationsNlines:
+          type: array
+          description: A list containing lines and stations that are marked as favorites
+          items:
+            anyOf:
+            - required:
+              - line-id
+              - name
+              - stations
+              - stations-map
+              - timetable
+              type: object
+              properties:
+                line-id:
+                  type: integer
+                  description: The ID of a line
+                  format: int32
+                  example: 1
+                name:
+                  type: string
+                  description: Line''s name
+                  example: Blue Line
+                stations:
+                  type: array
+                  description: An array containing all the stations that a line pass
+                    throught
+                  items:
+                    type: string
+                    description: Station''s name
+                    example: Venizelou
+                timetable:
+                  type: array
+                  description: A 2D array containing the starting times of a line
+                    from its starting and ending station
+                  example:
+                  - - 10:00
+                    - 10:30
+                  - - 10:10
+                    - 10:20
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      format: time-minute
+                is-favorite:
+                  type: boolean
+                  description: A variable indicating whether a line is marked as favorite
+                  example: false
+                stations-map:
+                  type: array
+                  description: The line''s stations depicted on a map
+                  example: BlueLine.png
+                  items:
+                    type: string
+                    format: byte
+                live-tracking:
+                  type: array
+                  description: Live position of railcars on a map
+                  example:
+                  - "40.6297373"
+                  - "22.9579498"
+                  items:
+                    type: string
+            - required:
+              - lines
+              - name
+              - position
+              - station-id
+              type: object
+              properties:
+                station-id:
+                  type: integer
+                  description: The ID of a station
+                  format: int32
+                  example: 0
+                name:
+                  type: string
+                  description: Station''s name
+                  example: Venizelou
+                position:
+                  type: array
+                  description: The station''s position defined by its geographical
+                    longitude and latitude
+                  example:
+                  - "40.6370981"
+                  - "22.9392805"
+                  items:
+                    maxItems: 2
+                    minItems: 2
+                    type: string
+                lines:
+                  type: array
+                  description: An array of the lines passing throught the station
+                  items:
+                    required:
+                    - line-id
+                    - name
+                    - stations
+                    - stations-map
+                    - timetable
+                    type: object
+                    properties:
+                      line-id:
+                        type: integer
+                        description: The ID of a line
+                        format: int32
+                        example: 1
+                      name:
+                        type: string
+                        description: Line''s name
+                        example: Blue Line
+                      stations:
+                        type: array
+                        description: An array containing all the stations that a line
+                          pass throught
+                        items:
+                          type: string
+                          description: Station''s name
+                          example: Venizelou
+                      timetable:
+                        type: array
+                        description: A 2D array containing the starting times of a
+                          line from its starting and ending station
+                        example:
+                        - - 10:00
+                          - 10:30
+                        - - 10:10
+                          - 10:20
+                        items:
+                          type: array
+                          items:
+                            type: string
+                            format: time-minute
+                      is-favorite:
+                        type: boolean
+                        description: A variable indicating whether a line is marked
+                          as favorite
+                        example: false
+                      stations-map:
+                        type: array
+                        description: The line''s stations depicted on a map
+                        example: BlueLine.png
+                        items:
+                          type: string
+                          format: byte
+                      live-tracking:
+                        type: array
+                        description: Live position of railcars on a map
+                        example:
+                        - "40.6297373"
+                        - "22.9579498"
+                        items:
+                          type: string
+                eta:
+                  type: array
+                  description: An array containing the estimated arrival time of each
+                    line passing through the station along with the lines'' names
+                  example:
+                  - 00-02
+                  - 00-09
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      format: time-minute
+                is-favorite:
+                  type: boolean
+                  description: A variable indicating whether the station is marked
+                    as favorite
+                  example: false
+      example:
+        stationsNlines:
+        - ""
+        - ""
+    journey_search_body:
+      allOf:
+      - required:
+        - line-id
+        - name
+        - stations
+        - stations-map
+        - timetable
+        type: object
+        properties:
+          line-id:
+            type: integer
+            description: The ID of a line
+            format: int32
+            example: 1
+          name:
+            type: string
+            description: Line''s name
+            example: Blue Line
+          stations:
+            type: array
+            description: An array containing all the stations that a line pass throught
+            items:
+              type: string
+              description: Station''s name
+              example: Venizelou
+          timetable:
+            type: array
+            description: A 2D array containing the starting times of a line from its
+              starting and ending station
+            example:
+            - - 10:00
+              - 10:30
+            - - 10:10
+              - 10:20
+            items:
+              type: array
+              items:
+                type: string
+                format: time-minute
+          is-favorite:
+            type: boolean
+            description: A variable indicating whether a line is marked as favorite
+            example: false
+          stations-map:
+            type: array
+            description: The line''s stations depicted on a map
+            example: BlueLine.png
+            items:
+              type: string
+              format: byte
+          live-tracking:
+            type: array
+            description: Live position of railcars on a map
+            example:
+            - "40.6297373"
+            - "22.9579498"
+            items:
+              type: string
+      - required:
+        - lines
+        - name
+        - position
+        - station-id
+        type: object
+        properties:
+          station-id:
+            type: integer
+            description: The ID of a station
+            format: int32
+            example: 0
+          name:
+            type: string
+            description: Station''s name
+            example: Venizelou
+          position:
+            type: array
+            description: The station''s position defined by its geographical longitude
+              and latitude
+            example:
+            - "40.6370981"
+            - "22.9392805"
+            items:
+              maxItems: 2
+              minItems: 2
+              type: string
+          lines:
+            type: array
+            description: An array of the lines passing throught the station
+            items:
+              $ref: '#/components/schemas/line_lineid_body'
+          eta:
+            type: array
+            description: An array containing the estimated arrival time of each line
+              passing through the station along with the lines'' names
+            example:
+            - 00-02
+            - 00-09
+            items:
+              type: array
+              items:
+                type: string
+                format: time-minute
+          is-favorite:
+            type: boolean
+            description: A variable indicating whether the station is marked as favorite
+            example: false
+    inline_response_201_1:
+      allOf:
+      - required:
+        - line-id
+        - name
+        - stations
+        - stations-map
+        - timetable
+        type: object
+        properties:
+          line-id:
+            type: integer
+            description: The ID of a line
+            format: int32
+            example: 1
+          name:
+            type: string
+            description: Line''s name
+            example: Blue Line
+          stations:
+            type: array
+            description: An array containing all the stations that a line pass throught
+            items:
+              type: string
+              description: Station''s name
+              example: Venizelou
+          timetable:
+            type: array
+            description: A 2D array containing the starting times of a line from its
+              starting and ending station
+            example:
+            - - 10:00
+              - 10:30
+            - - 10:10
+              - 10:20
+            items:
+              type: array
+              items:
+                type: string
+                format: time-minute
+          is-favorite:
+            type: boolean
+            description: A variable indicating whether a line is marked as favorite
+            example: false
+          stations-map:
+            type: array
+            description: The line''s stations depicted on a map
+            example: BlueLine.png
+            items:
+              type: string
+              format: byte
+          live-tracking:
+            type: array
+            description: Live position of railcars on a map
+            example:
+            - "40.6297373"
+            - "22.9579498"
+            items:
+              type: string
+      - required:
+        - lines
+        - name
+        - position
+        - station-id
+        type: object
+        properties:
+          station-id:
+            type: integer
+            description: The ID of a station
+            format: int32
+            example: 0
+          name:
+            type: string
+            description: Station''s name
+            example: Venizelou
+          position:
+            type: array
+            description: The station''s position defined by its geographical longitude
+              and latitude
+            example:
+            - "40.6370981"
+            - "22.9392805"
+            items:
+              maxItems: 2
+              minItems: 2
+              type: string
+          lines:
+            type: array
+            description: An array of the lines passing throught the station
+            items:
+              $ref: '#/components/schemas/line_lineid_body'
+          eta:
+            type: array
+            description: An array containing the estimated arrival time of each line
+              passing through the station along with the lines'' names
+            example:
+            - 00-02
+            - 00-09
+            items:
+              type: array
+              items:
+                type: string
+                format: time-minute
+          is-favorite:
+            type: boolean
+            description: A variable indicating whether the station is marked as favorite
+            example: false
