@@ -73,8 +73,8 @@ module.exports.setLineAttributes = function setLineAttributes (req, res, next, b
     });
 };
 
-module.exports.~LineEntity = function ~LineEntity (req, res, next, lineId) {
-  Line.~LineEntity(lineId)
+module.exports.deleteLineEntity = function deleteLineEntity (req, res, next, lineId) {
+  Line.deleteLineEntity(lineId)
     .then(function (response) {
       utils.writeJson(res, response);
     })

@@ -53,8 +53,8 @@ module.exports.stationEntity = function stationEntity (req, res, next, body) {
     });
 };
 
-module.exports.~StationEntity = function ~StationEntity (req, res, next, stationId) {
-  Station.~StationEntity(stationId)
+module.exports.deleteStationEntity = function deleteStationEntity (req, res, next, stationId) {
+  Station.deleteStationEntity(stationId)
     .then(function (response) {
       utils.writeJson(res, response);
     })

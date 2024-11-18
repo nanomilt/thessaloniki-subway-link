@@ -33,8 +33,8 @@ module.exports.setProductAttributes = function setProductAttributes (req, res, n
     });
 };
 
-module.exports.~ProductEntity = function ~ProductEntity (req, res, next, productId) {
-  Product.~ProductEntity(productId)
+module.exports.deleteProductEntity = function deleteProductEntity (req, res, next, productId) {
+  Product.deleteProductEntity(productId)
     .then(function (response) {
       utils.writeJson(res, response);
     })

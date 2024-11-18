@@ -84,7 +84,7 @@ exports.setProductAttributes = function(body,productId) {
  * productId Integer The ID of the product to be deleted
  * returns product_productid_body
  **/
-exports.~ProductEntity = function(productId) {
+exports.deleteProductEntity = function(productId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
