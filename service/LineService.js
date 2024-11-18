@@ -173,7 +173,7 @@ exports.setLineAttributes = function(body,lineId) {
  * lineId Integer The ID of the line to be deleted
  * returns line_lineid_body
  **/
-exports.~LineEntity = function(lineId) {
+exports.deleteLineEntity = function(lineId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
