@@ -84,7 +84,7 @@ exports.setAnnouncementAttributes = function(body,announcementId) {
  * announcementId Integer The ID of the announcement to be deleted
  * returns announcement_announcementid_body
  **/
-exports.~AnnouncementEntity = function(announcementId) {
+exports.deleteAnnouncementEntity = function(announcementId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
