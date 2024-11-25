@@ -2,8 +2,6 @@ openapi: 3.0.3
 info:
   title: TSL - Thessaloniki Subway Link
   version: "1.0"
-servers:
-- url: https://tsl-metro.gr
 tags:
 - name: user
   description: Information about the user
