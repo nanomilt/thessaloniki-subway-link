@@ -33,19 +33,27 @@ exports.announcementEntity = function(body) {
  * announcementId Integer The ID ot the announcement
  * returns announcement_body
  **/
-exports.getAnnouncementEntity = function(announcementId) {
+exports.getAnnouncementEntity = function(announcementID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "announcement-id" : 154,
-  "upload-date" : "2000-01-23T04:56:07.000+00:00",
-  "title" : "Venizelou station",
-  "body" : "Venizelou station will remain closed due to maintenance"
-};
+      "announcementID" : 154,
+      "upload-date" : "2000-01-23T04:56:07.000+00:00",
+      "title" : "Venizelou station",
+      "body" : "Venizelou station will remain closed due to maintenance"
+    };
     if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
+      resolve({
+        status: 200,
+        body: examples[Object.keys(examples)[0]]
+    });
     } else {
-      resolve();
+      resolve({
+        status: 404,
+        body: {
+          message: "Announcement not found"
+        }
+      });
     }
   });
 }
