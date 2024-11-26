@@ -7,7 +7,7 @@
     "prestart": "npm install",
     "start": "node index.js",
     "test": "c8 ava",
-    "test:product": "c8 ava ProductTests.test.js"
+    "test:product": "c8 ava ProductTests.test.js",
     "cypress:open": "cypress open",
 		"cypress:run": "cypress run"
     
