@@ -13,14 +13,22 @@ exports.getProductEntity = function(productId) {
     var examples = {};
     examples['application/json'] = {
   "quantity" : 3,
-  "product-id" : 14,
+  "productId" : 14,
   "price" : 8.99,
   "name" : "3-day ticket"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+}; // add this everywhere on product service
+  if (Object.keys(examples).length > 0) {
+    resolve({
+      status: 200,
+      body: examples[Object.keys(examples)[0]]
+  });
+  } else {
+    resolve({
+      status: 404,
+      body: {
+        message: "Product not found"
+        }
+      });
     }
   });
 }
@@ -42,10 +50,18 @@ exports.productEntity = function(body) {
   "price" : 8.99,
   "name" : "3-day ticket"
 };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+  if (Object.keys(examples).length > 0) {
+    resolve({
+      status: 200,
+      body: examples[Object.keys(examples)[0]]
+  });
+  } else {
+    resolve({
+      status: 404,
+      body: {
+        message: "Product not found"
+        }
+      });
     }
   });
 }
@@ -68,10 +84,18 @@ exports.setProductAttributes = function(body,productId) {
   "price" : 8.99,
   "name" : "3-day ticket"
 };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+  if (Object.keys(examples).length > 0) {
+    resolve({
+      status: 200,
+      body: examples[Object.keys(examples)[0]]
+  });
+  } else {
+    resolve({
+      status: 404,
+      body: {
+        message: "Product not found"
+        }
+      });
     }
   });
 }
@@ -93,10 +117,18 @@ exports.deleteProductEntity = function(productId) {
   "price" : 8.99,
   "name" : "3-day ticket"
 };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+  if (Object.keys(examples).length > 0) {
+    resolve({
+      status: 200,
+      body: examples[Object.keys(examples)[0]]
+  });
+  } else {
+    resolve({
+      status: 404,
+      body: {
+        message: "Product not found"
+        }
+      });
     }
   });
 }
