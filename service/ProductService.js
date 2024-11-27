@@ -46,7 +46,7 @@ exports.productEntity = function(body) {
     var examples = {};
     examples['application/json'] = {
   "quantity" : 3,
-  "product-id" : 14,
+  "productId" : 14,
   "price" : 8.99,
   "name" : "3-day ticket"
 };
@@ -80,7 +80,7 @@ exports.setProductAttributes = function(body,productId) {
     var examples = {};
     examples['application/json'] = {
   "quantity" : 3,
-  "product-id" : 14,
+  "productId" : 14,
   "price" : 8.99,
   "name" : "3-day ticket"
 };
@@ -113,7 +113,7 @@ exports.deleteProductEntity = function(productId) {
     var examples = {};
     examples['application/json'] = {
   "quantity" : 3,
-  "product-id" : 14,
+  "productId" : 14,
   "price" : 8.99,
   "name" : "3-day ticket"
 };
