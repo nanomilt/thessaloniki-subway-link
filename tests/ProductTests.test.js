@@ -27,7 +27,7 @@ test('GET /product/{productId} should return a product', async (t) => {
     const ProductEntity = await getProductEntity(14); // 14: AnnouncementID TODO: generateTestID function
     
     t.is(ProductEntity.status, 200);
-    t.truthy(ProductEntity.body.ProductID == 14);
+    t.truthy(ProductEntity.body.productID == 14);
     t.truthy(ProductEntity.body.quantity == 3);
     t.truthy(ProductEntity.body.price == 8.99);
 });
