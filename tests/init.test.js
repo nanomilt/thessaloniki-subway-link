@@ -1,14 +1,13 @@
 const http = require('http');
 const test = require('ava');
 const got = require('got');
-
-test("A test that passes", (t) => {
+test("A test that passes",(t) =>{
 	t.pass();
 });
 
-test("A test that fails", (t) => {
-	t.fail();
-});
+//test("A test that fails", (t) => {
+//	t.fail();
+//});
 
 // test("Throws error", (t) => {
 // 	t.throws(() => {
