@@ -23,7 +23,7 @@ exports.announcementEntity = function(body) {
       resolve(undefined);
       return;
     }
-    
+
     resolve({
       announcementID: body.announcementID,
       announcementTitle: body.announcementTitle,
