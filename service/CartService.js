@@ -132,15 +132,31 @@ exports.getCartEntity = function(userID) {
  * userId Integer The ID of the user
  * returns inline_response_200
  **/
-exports.setCartAttributes = function(body,userId) {
+exports.setCartAttributes = function(body,userID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    examples['application/json'] = {
+      "userID" : 64,
+      "cartBody" : "This is the costumer's cart"
+    };
+
+    if (body.userID !== 64) {
+      resolve({
+        status: 404,
+        body: {
+          message: "Cart not found"
+        }
+      });
     }
+
+    // Success
+    resolve({
+      status: 200,
+      body: {
+        userID : body.userID,
+        cartBody: body.cartBody
+      }
+      });
   });
 }
 

@@ -2,9 +2,10 @@ const http = require('http');
 const test = require('ava');
 const listen = require('test-listen');
 const got = require('got');
-const { cartEntity } = require('../service/CartService.js'); 
 const app = require('../index.js'); 
+const { cartEntity } = require('../service/CartService.js'); 
 const { getCartEntity } = require('../service/CartService.js');
+const { setCartAttributes} = require('../service/CartService.js');
 
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
@@ -51,10 +52,35 @@ test('GET /CartEntity/{userId} should return the cart', async (t) => {
   t.truthy(CartEntity.body.cartBody ==  "This is the costumer's cart");
 });
 
-test('GET /CartEntityy/{userID} should return 404 if cart not found', async (t) => {
+test('GET /CartEntity/{userID} should return 404 if cart not found', async (t) => {
   const cartNotFound = await getCartEntity(35);
   console.log("Cart not found:", cartNotFound);
 
   t.is(cartNotFound.status, 404);
   t.is(cartNotFound.body.message, "Cart not found");
+});
+test('PUT /cart should update the cart', async (t) => {
+  const updatedCart = {
+      "userID" : 64,
+      "cartBody" : "This is the costumer's cart"
+  };
+
+  const response = await setCartAttributes(updatedCart);
+  
+
+  t.is(response.status, 200);
+  t.is(response.body.cartBody, "This is the costumer's cart");
+});
+
+test('PUT /cart should return 404 if cart not found', async (t) => {
+  const updatedCart = {
+      "userID" : 65,
+      "cartBody" : "This is the costumer's cart"
+  };
+
+  const response = await setCartAttributes(updatedCart);
+   console.log('Edit Cart test:', response);
+
+  t.is(response.status, 404);
+  t.is(response.body.message, "Cart not found");
 });
