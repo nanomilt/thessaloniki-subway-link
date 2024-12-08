@@ -20,6 +20,27 @@ test.before(async (t) => {
 test.after.always((t) => {
   t.context.server.close();
 });
+test('POST /cart should create a cart page', async (t) => {
+  const newCart = {
+     "userID" : 24,
+     "cartBody": "This is the costumer's cart"
+  };
+  const response = await cartEntity(newCart);
+  console.log('Create Cart test:', response);
+
+  t.truthy(response);
+  t.is(response.userID, 24);
+  t.is(response.cartBody, "This is the costumer's cart");
+});
+
+test('POST /cart should handle empty cart', async (t) => {
+  const emptyCart = {};
+  
+  const response = await cartEntity(emptyCart);
+  console.log('Empty Cart test:', response);
+
+  t.is(response, undefined);
+});
 test('GET /CartEntity/{userId} should return the cart', async (t) => {
   const CartEntity = await getCartEntity(34); 
   

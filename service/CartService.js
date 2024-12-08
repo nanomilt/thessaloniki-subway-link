@@ -13,10 +13,10 @@ exports.cartEntity = function(body,userID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-    "userID": 34,
+    "userID": 24,
     "cartBody": "This is the costumer's cart"
   }
-    // Announcement doesn't exist
+    // Cart doesn't exist
     if (Object.keys(body).length === 0) {
       resolve(undefined);
       return;
@@ -32,7 +32,7 @@ exports.cartEntity = function(body,userID) {
 
 
 /**
- * Generate QR codes for pruchased items
+ * Generate QR codes for purchased items
  * Generate QR codes for purchased items
  *
  * body Confirm_generate_body 
