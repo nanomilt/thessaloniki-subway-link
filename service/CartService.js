@@ -9,17 +9,26 @@
  * userId Integer The ID of the user
  * returns inline_response_200
  **/
-exports.cartEntity = function(body,userId) {
+exports.cartEntity = function(body,userID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    examples['application/json'] = {
+    "userID": 34,
+    "cartBody": "This is the costumer's cart"
+  }
+    // Announcement doesn't exist
+    if (Object.keys(body).length === 0) {
+      resolve(undefined);
+      return;
     }
+
+    resolve({
+      userID: body.userID,
+      cartBody: body.cartBody
+    });
   });
 }
+
 
 
 /**
@@ -91,19 +100,30 @@ exports.confirmPOST = function(body,userId) {
  * userId Integer The ID of a user
  * returns inline_response_200
  **/
-exports.getCartEntity = function(userId) {
+exports.getCartEntity = function(userID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    examples['application/json'] = { 
+    "userID":34,
+    "cartBody" : "This is the costumer's cart"
+    };
+    if (userID !== 34 || !Object.keys(examples).length) {
+      resolve({
+        status: 404,
+        body: {
+          message: "Cart not found"
+        }
+      });
     }
-  });
-}
-
-
+    else {
+      // Success
+      resolve({
+        status: 200,
+        body: examples[Object.keys(examples)[0]]
+      });
+    }
+    });
+    }
 /**
  * Edit a user''s cart
  * Edit a user''s cart

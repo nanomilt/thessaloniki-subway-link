@@ -1,71 +1,39 @@
 const http = require('http');
 const test = require('ava');
+const listen = require('test-listen');
 const got = require('got');
-const app = (req, res) => {
-    if (req.method === 'POST' && req.url === '/api') {
-      let data = '';
-  
-      // Collect the request data
-      req.on('data', chunk => {
-        data += chunk;
-      });
-  
-      // Handle the end of the request
-      req.on('end', () => {
-        const parsedData = JSON.parse(data);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({
-          message: 'Data received successfully!',
-          receivedData: parsedData, // Echo the received data
-        }));
-      });
-  
-    } else if (req.method === 'GET' && req.url === '/api') {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ message: 'It works!' }));
-    } else {
-      res.statusCode = 404;
-      res.end();
-    }
-  };
+const { cartEntity } = require('../service/CartService.js'); 
+const app = require('../index.js'); 
+const { getCartEntity } = require('../service/CartService.js');
 
 test.before(async (t) => {
-  // Create the server and listen on a random available port
-  t.context.server = http.createServer(app);
-  
-  // Promisify the server.listen so we can wait for it to be ready
-  await new Promise((resolve, reject) => {
-    t.context.server.listen(0, () => {
-      const { port } = t.context.server.address();
-      t.context.got = got.extend({ responseType: 'json', prefixUrl: `http://localhost:${port}/` });
-      resolve();
+	t.context.server = http.createServer(app);
+    t.context.prefixUrl = await listen(t.context.server);
+    // const server = t.context.server.listen();
+    // const { port } = server.address();
+	t.context.got = got.extend({ 
+        responseType: "json", 
+        prefixUrl: t.context.prefixUrl,
     });
-  });
 });
 
 test.after.always((t) => {
-  // Close the server after the tests
   t.context.server.close();
 });
+test('GET /CartEntity/{userId} should return the cart', async (t) => {
+  const CartEntity = await getCartEntity(34); 
+  
+  console.log(CartEntity);
 
-test("GET /api", async (t) => {
-  const response = await t.context.got("api");
-  console.log(response.body);  // Log the response body for debugging
-  t.is(response.statusCode, 200);
-  t.is(response.body.message, "It works!");
+  t.is(CartEntity.status, 200);
+  t.truthy(CartEntity.body.userID == 34);
+  t.truthy(CartEntity.body.cartBody ==  "This is the costumer's cart");
 });
-test("POST /api", async (t) => {
-    const postData = { name: 'John Doe', age: 30 };
-  
-    const response = await t.context.got.post('api', {
-      json: postData, // Send the data as JSON
-      responseType: 'json', // Expect JSON in the response
-    });
-  
-    console.log(response.body);  // Log the response body for debugging
-    t.is(response.statusCode, 200);
-    t.is(response.body.message, 'Data received successfully!');
-    t.deepEqual(response.body.receivedData, postData); // Verify the data received matches
-  });
+
+test('GET /CartEntityy/{userID} should return 404 if cart not found', async (t) => {
+  const cartNotFound = await getCartEntity(35);
+  console.log("Cart not found:", cartNotFound);
+
+  t.is(cartNotFound.status, 404);
+  t.is(cartNotFound.body.message, "Cart not found");
+});
