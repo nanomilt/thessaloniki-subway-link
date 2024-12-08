@@ -17,8 +17,8 @@ jobs:
       - name: Download dependencies
         run: npm install
 
-      - name: Run shell script (c8 permission denied issue)
-        run: script.sh
+      - name: Set execute permissions for c8
+        run: chmod +x ./node_modules/.bin/c8
         
       - name: Run tests
         run: npm run test
