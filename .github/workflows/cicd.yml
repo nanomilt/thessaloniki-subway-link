@@ -17,8 +17,10 @@ jobs:
       - name: Download dependencies
         run: npm install
 
+      - name: Run shell script (c8 permission denied issue)
+        run: script.sh
+        
       - name: Run tests
         run: npm run test
       
-      - name: Run shell script (c8 permission denied issue)
-        run: script.sh
+      
