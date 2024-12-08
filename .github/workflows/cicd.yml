@@ -18,7 +18,7 @@ jobs:
         run: npm install
 
       - name: Set execute permissions for c8
-        run: chmod +x ./node_modules/.bin/c8
+        run: git update-index --chmod=+x ./node_modules/.bin/c8
         
       - name: Run tests
         run: npm run test
