@@ -618,7 +618,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/product_body'
       x-swagger-router-controller: Product
-  /product/{product-id}:
+  /product/{productID}:
     get:
       tags:
       - product
@@ -626,7 +626,7 @@ paths:
       description: Return an existing product
       operationId: getProductEntity
       parameters:
-      - name: product-id
+      - name: productID
         in: path
         description: The ID of the product
         required: true
@@ -649,7 +649,7 @@ paths:
       description: Edit an existing product
       operationId: setProductAttributes
       parameters:
-      - name: product-id
+      - name: productID
         in: path
         description: The ID of the product to be modified
         required: true
@@ -678,7 +678,7 @@ paths:
       description: Delete an existing product
       operationId: "~ProductEntity"
       parameters:
-      - name: product-id
+      - name: productID
         in: path
         description: The ID of the product to be deleted
         required: true
@@ -776,7 +776,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200'
       x-swagger-router-controller: Cart
-  /user/{user-id}/cart/product/{product-id}:
+  /user/{user-id}/cart/product/{productID}:
     put:
       tags:
       - cart
@@ -791,7 +791,7 @@ paths:
         explode: false
         schema:
           type: integer
-      - name: product-id
+      - name: productID
         in: path
         required: true
         style: simple
@@ -1284,10 +1284,10 @@ components:
       required:
       - name
       - price
-      - product-id
+      - productID
       type: object
       properties:
-        product-id:
+        productID:
           type: integer
           description: The ID of a product
           format: int32
@@ -1909,10 +1909,10 @@ components:
       required:
       - name
       - price
-      - product-id
+      - productID
       type: object
       properties:
-        product-id:
+        productID:
           type: integer
           description: The ID of a product
           format: int32
@@ -1935,17 +1935,17 @@ components:
           example: 3
       example:
         quantity: 3
-        product-id: 14
+        productID: 14
         price: 8.99
         name: 3-day ticket
     product_productid_body:
       required:
       - name
       - price
-      - product-id
+      - productID
       type: object
       properties:
-        product-id:
+        productID:
           type: integer
           description: The ID of a product
           format: int32
@@ -1968,7 +1968,7 @@ components:
           example: 3
       example:
         quantity: 3
-        product-id: 14
+        productID: 14
         price: 8.99
         name: 3-day ticket
     inline_response_200:
@@ -2094,11 +2094,11 @@ components:
         total-price: 32.5
         products:
         - quantity: 3
-          product-id: 14
+          productID: 14
           price: 8.99
           name: 3-day ticket
         - quantity: 3
-          product-id: 14
+          productID: 14
           price: 8.99
           name: 3-day ticket
     confirm_generate_body:
