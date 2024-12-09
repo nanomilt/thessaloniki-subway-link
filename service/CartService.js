@@ -63,20 +63,28 @@ exports.confirmGeneratePOST = function(body,userId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "is-guest" : false,
+  "isGuest" : false,
   "password" : "SoftEng2024!",
-  "user-id" : 4221,
+  "userId" : 4221,
   "email" : "klpanagi@ece.auth.gr",
-  "username" : "klpanagi"
+  "username" : "klpanagi"  
 };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+
+   // QR Code cannot be generated
+     if (Object.keys(body).length === 0) {
+     resolve(undefined);
+    return;
 }
 
+  resolve({
+     userId: body.userId,
+     isGuest: body.isGuest,
+     password: body.password,
+     email: body.email,
+     username: body.username
+    });
+  });
+}
 
 /**
  * Confirm a payment process
@@ -90,25 +98,39 @@ exports.confirmPOST = function(body,userId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "user-id" : 0,
-  "total-price" : 32.5,
+  "userId" : 4221,
+  "totalprice" : 26.97,
+  "paymentBody" : "Correct Payment Process",
   "products" : [ {
     "quantity" : 3,
-    "product-id" : 14,
+    "productId" : 14,
     "price" : 8.99,
     "name" : "3-day ticket"
   }, {
     "quantity" : 3,
-    "product-id" : 14,
+    "productId" : 14,
     "price" : 8.99,
     "name" : "3-day ticket"
   } ]
 };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+
+    // Payment is rejected
+    if (Object.keys(body).length === 0) {
+      resolve(undefined);
+      return;
     }
+
+    resolve({
+      userId: body.userId,
+      totalprice: body.totalprice,
+      paymentBody: body.paymentBody,
+      products: body.products.map(product => ({
+        productId: product.productId,
+        quantity: product.quantity,
+        price: product.price,
+        name: product.name
+      }))
+    });
   });
 }
 
@@ -233,15 +255,52 @@ exports.setCartAttributes = function(body,userID) {
  * productId Integer 
  * returns inline_response_200
  **/
-exports.setCartProductAttribute = function(body,userId,productId) {
+exports.setCartProductAttributes = function(body,userId,productId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    examples['application/json'] = {
+      "userId" : 4221,
+      "cartBody" : "This is the product's quantity cart",
+      "totalprice" : 26.97,
+      "products" : [ {
+    "quantity" : 3,
+    "product-id" : 14,
+    "price" : 8.99,
+    "name" : "3-day ticket"
+  }, {
+    "quantity" : 3,
+    "product-id" : 14,
+    "price" : 8.99,
+    "name" : "3-day ticket"
+  } ]
+    };
+
+    if (body.userId !== 4221 && body.productId !== 14) {
+      resolve({
+        status: 404,
+        body: {
+          message: "Wrong Quantity"
+        }
+      });
     }
+
+    // Success
+    resolve({
+      status: 200,
+      body: {
+        userId : body.userID,
+        cartBody: body.cartBody,
+        totalprice : body.totalprice,
+        products : [
+        {
+        productId : body.productId,
+        name : body.name,
+        price : body.price,
+        quantity : body.quantity
+        }
+        ]
+      }
+      });
   });
 }
 
