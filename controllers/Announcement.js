@@ -33,8 +33,8 @@ module.exports.setAnnouncementAttributes = function setAnnouncementAttributes (r
     });
 };
 
-module.exports.~AnnouncementEntity = function ~AnnouncementEntity (req, res, next, announcementId) {
-  Announcement.~AnnouncementEntity(announcementId)
+module.exports.deleteAnnouncementEntity = function deleteAnnouncementEntity (req, res, next, announcementId) {
+  Announcement.deleteAnnouncementEntity(announcementId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
