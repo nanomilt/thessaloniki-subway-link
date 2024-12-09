@@ -12,11 +12,12 @@ exports.announcementEntity = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "announcement-id" : 154,
-  "upload-date" : "2000-01-23T04:56:07.000+00:00",
-  "announcemenTitle" : "Venizelou station",
-  "announcementBody" : "Venizelou station will remain closed due to maintenance"
-};
+      "announcementID" : 154,
+      "upload-date" : "2000-01-23T04:56:07.000+00:00",
+      "announcementTitle" : "Venizelou station",
+      "announcementBody" : "Venizelou station will remain closed due to maintenance"
+    };
+    
     // Announcement doesn't exist
     if (Object.keys(body).length === 0) {
       resolve(undefined);
@@ -36,45 +37,45 @@ exports.announcementEntity = function(body) {
  * Return an existing announcement
  * Return an existing announcement
  *
- * announcementId Integer The ID ot the announcement
+ * announcementID Integer The ID ot the announcement
  * returns announcement_body
  **/
-exports.getAnnouncementEntity = function(announcementId) {
+exports.getAnnouncementEntity = function(announcementID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "announcement-id" : 154,
-  "upload-date" : "2000-01-23T04:56:07.000+00:00",
-  "announcementTitle" : "Venizelou station",
-  "announcementBody" : "Venizelou station will remain closed due to maintenance"
-};
-if (announcementID !== 154 || !Object.keys(examples).length) {
-  resolve({
-    status: 404,
-    body: {
-      message: "Announcement not found"
+      "announcementID" : 154,
+      "upload-date" : "2000-01-23T04:56:07.000+00:00",
+      "announcementTitle" : "Venizelou station",
+      "announcementBody" : "Venizelou station will remain closed due to maintenance"
+    };
+    
+    if (announcementID !== 154 || !Object.keys(examples).length) {
+      resolve({
+        status: 404,
+        body: {
+          message: "Announcement not found"
+        }
+      });
+    }
+    else {
+      // Success
+      resolve({
+        status: 200,
+        body: examples[Object.keys(examples)[0]]
+      });
     }
   });
 }
-else {
-  // Success
-  resolve({
-    status: 200,
-    body: examples[Object.keys(examples)[0]]
-  });
-}
-});
-}
-
 
 
 /**
  * Edit an existing announcement
  * Edit an existing announcement
  *
- * body Announcement_announcementid_body 
- * announcementId Integer The ID of the announcement to be modified
- * returns announcement_announcementid_body
+ * body Announcement_announcementID_body 
+ * announcementID Integer The ID of the announcement to be modified
+ * returns announcement_announcementID_body
  **/
 exports.setAnnouncementAttributes = function(body) {
   return new Promise(function(resolve, reject) {
