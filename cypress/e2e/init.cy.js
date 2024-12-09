@@ -19,11 +19,10 @@ describe("Home page", () => {
         cy.contains('Execute').should('exist').click();
         cy.contains('Successful operation').should('exist')
 
-        
-        
         // Check PUT endpoint
         cy.contains("PUT​/announcement​/{announcement-id}").should('exist').click();
         cy.contains('Try it out').should('exist').click();
+        cy.get('#announcement-id').type('154');
         cy.contains('Execute').should('exist').click();
 
         // Check DELETE endpoint

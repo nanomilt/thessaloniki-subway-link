@@ -1,29 +1,9 @@
-const http = require('http');
 const test = require('ava');
-const listen = require("test-listen");
-const got = require('got');
-const app = require("../index.js");
 
 const { getProductEntity } = require("../service/ProductService.js");
 const { deleteProductEntity } = require("../service/ProductService.js");
 const { setProductAttributes } = require("../service/ProductService.js");
 const { productEntity } = require("../service/ProductService.js");
-
-test.before(async (t) => {
-	t.context.server = http.createServer(app);
-    t.context.prefixUrl = await listen(t.context.server);
-    // const server = t.context.server.listen();
-    // const { port } = server.address();
-	t.context.got = got.extend({ 
-        responseType: "json", 
-        prefixUrl: t.context.prefixUrl,
-    });
-});
-
-test.after.always((t) => {
-	t.context.server.close();
-});
-
 
 
 test('GET /product/{productId} should return a product', async (t) => {  
