@@ -1,0 +1,136 @@
+describe('Product Swagger Documentation', () => {
+    beforeEach(() => {
+      cy.visit('http://localhost:8080/docs')  // or whatever your Swagger UI path is
+      timeout: 10000
+    });
+  
+    // it('shows product section', () => {
+    //   cy.get('.opblock-tag-section')
+    //     .contains('product')
+    //     .click()
+  
+    //   // Verify endpoint documentation
+    //   cy.contains('GET /product/{productId}').should('be.visible')
+    //   cy.contains('Information about products').should('be.visible')
+    // });
+  
+    it('can try out POST product endpoint', () => {
+      cy.get('.opblock-tag-section')
+        .contains('product')
+  
+      cy.contains('POST​/product').should('be.visible')
+        .click()
+  
+      cy.contains('Try it out').click()
+  
+     cy.contains('Execute')
+        .click()
+  
+      cy.contains('Response body').should('be.visible')
+      cy.contains('200').should('be.visible')
+    });
+  
+    it('can modify POST product example value endpoint', () => {
+      cy.get('.opblock-tag-section')
+        .contains('product')
+  
+      cy.contains('POST​/product').should('be.visible')
+        .click()
+  
+      cy.contains('Try it out').click()
+  
+      cy.get('textarea').clear()
+        .type(`{
+          "productId": 15,
+          "name": "2-day ticket",
+          "price": 9.99,
+          "quantity": 4
+        }`), { parseSpecialCharSequences: false }
+  
+      cy.contains('Execute')
+        .click()
+  
+      cy.contains('Response body').should('be.visible')
+      cy.contains('400').should('be.visible')
+    });
+  
+  
+    it('can try out GET product endpoint', () => {
+      cy.get('.opblock-tag-section')
+        .contains('product')
+        .click()
+        .click()
+      
+      cy.contains('GET​/product​/{productID}').should('be.visible')
+        .click()
+  
+      // cy.contains('GET /product/{productID}')
+      //   .click()
+     
+      
+      cy.contains('Try it out').click()
+      
+      // cy.get('input[placeholder="productId"]')
+      //   .type('14')
+  
+      cy.get('input[type="text"][placeholder="productID - The ID of the product"]')
+        .type('14')
+      
+      cy.contains('Execute')
+        .click()
+  
+      cy.contains('Response body').should('be.visible')
+      cy.contains('200').should('be.visible')
+  
+    });
+  
+    it('can try out PUT product endpoint', () => {
+      cy.get('.opblock-tag-section')
+        .contains('product')
+  
+        cy.contains('PUT​/product​/{productID}').should('be.visible')
+        .click()
+  
+      cy.contains('Try it out').click()
+  
+      cy.get('input[type="text"][placeholder="productID - The ID of the product to be modified"]')
+        .type('14')
+  
+      cy.get('textarea').clear()
+        .type(`{
+          "productId": 14,
+          "name": "3-day ticket",
+          "price": 8.99,
+          "quantity": 3
+        }`), { parseSpecialCharSequences: false }
+  
+      cy.contains('Execute')
+        .click()
+  
+      cy.contains('Response body').should('be.visible')
+      cy.contains('200').should('be.visible')
+  
+    })
+  
+    it("can try out DELETE product endpoint", () => {
+      cy.get('.opblock-tag-section')
+        .contains('product')
+  
+      cy.contains('DELETE​/product​/{productID}').should('be.visible')
+        .click()
+  
+      cy.contains('Try it out').click()
+  
+      cy.get('input[type="text"][placeholder="productID - The ID of the product to be deleted"]')
+        .type('14')
+  
+      cy.contains('Execute')
+        .click()
+  
+      cy.contains('Response body').should('be.visible')
+      cy.contains('200').should('be.visible')
+    });
+  
+    
+  
+  });
