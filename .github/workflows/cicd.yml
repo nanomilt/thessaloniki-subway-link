@@ -26,6 +26,17 @@ jobs:
       - name: Run Tests
         run: npm run test
 
+  deploy:
+    name: Deploy
+    needs: [ci]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to production
+        uses: balojohn/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
         
       
       
