@@ -1,34 +1,34 @@
-describe("Login page", () => {
+describe("Home page", () => {
     beforeEach(() => {
-        cy.visit("http://localhost:8080")
+        cy.visit("http://localhost:8080/docs")
     });
 
-//     it("Correct login", () => {
-//         cy.get("#username").type("karanikio");
-//         cy.get("#password").type("12345678");
-//         cy.get("#submit").click();
-//         cy.url().should("include", "/dashboard");
-//     });
+    it("Check Swagger UI", () => {
+        cy.contains('announcement').should('exist');
+        
+        // Check POST endpoint
+        cy.contains("POST​/announcement").should('exist').click();
+        cy.contains('Try it out').should('exist').click();
+        cy.contains('Execute').should('exist').click();
+        cy.contains('Resource created').should('exist')
 
-//     it("Wrong credentials", () => {
-//         cy.get("#username").type("karanikio");
-//         cy.get("#password").type("12345678");
-//         cy.get("#submit").click();
-//         cy.url().should("not.include", "/dashboard");
-//         cy.contains("Authentication Error");
-//     });
-// });
+        // Check GET endpoint
+        cy.contains("GET​/announcement​/{announcement-id}").should('exist').click();
+        cy.contains('Try it out').should('exist').click();
+        cy.get('#announcement-id').type('154');
+        cy.contains('Execute').should('exist').click();
+        cy.contains('Successful operation').should('exist')
 
-// describe("Home page", () => {
-//     beforeEach(() => {
-//         cy.visit("http://localhost:3002")
-//         cy.get("#username").type("karanikio");
-//         cy.get("#password").type("12345678");
-//         cy.get("#submit").click();
-//     });
+        // Check PUT endpoint
+        cy.contains("PUT​/announcement​/{announcement-id}").should('exist').click();
+        cy.contains('Try it out').should('exist').click();
+        cy.get('#announcement-id').type('154');
+        cy.contains('Execute').should('exist').click();
 
-//     it("Check dashboard page", () => {
-//         cy.url().should("include", "/dashboard");
-//         cy.contains("Dashboard");
-//     });
+        // Check DELETE endpoint
+        cy.contains("DELETE​/announcement​/{announcement-id}").should('exist').click();
+        cy.contains('Try it out').should('exist').click();
+        cy.contains('Execute').should('exist').click();
+
+    });
 });

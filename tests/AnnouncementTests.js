@@ -1,28 +1,9 @@
-const http = require('http');
 const test = require('ava');
-const listen = require("test-listen");
-const got = require('got');
-const app = require("../index.js");
 
 const { announcementEntity } = require("../service/AnnouncementService.js");
 const { getAnnouncementEntity } = require("../service/AnnouncementService.js");
 const { setAnnouncementAttributes } = require("../service/AnnouncementService.js");
 const { deleteAnnouncementEntity } = require("../service/AnnouncementService.js");
-
-test.before(async (t) => {
-	t.context.server = http.createServer(app);
-    t.context.prefixUrl = await listen(t.context.server);
-    // const server = t.context.server.listen();
-    // const { port } = server.address();
-	t.context.got = got.extend({ 
-        responseType: "json", 
-        prefixUrl: t.context.prefixUrl,
-    });
-});
-
-test.after.always((t) => {
-	t.context.server.close();
-});
 
 
 test('GET /announcement/{announcementId} should return an announcement', async (t) => {
