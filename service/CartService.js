@@ -13,8 +13,21 @@ exports.cartEntity = function(body,userID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-    "userID": 24,
-    "cartBody": "This is the costumer's cart"
+    "userID": 4221,
+    "totalPrice":26.97,
+    "cartBody": "This is the costumer's cart",
+    "products" : [ {
+    "quantity" : 3,
+    "productID" : 14,
+    "price" : 8.99,
+    "name" : "3-day ticket"
+  }, {
+    "quantity" : 3,
+    "productID" : 14,
+    "price" : 8.99,
+    "name" : "3-day ticket"
+  } ]
+    
   }
     // Cart doesn't exist
     if (Object.keys(body).length === 0) {
@@ -24,7 +37,14 @@ exports.cartEntity = function(body,userID) {
 
     resolve({
       userID: body.userID,
-      cartBody: body.cartBody
+      cartBody: body.cartBody,
+      totalPrice:body.totalPrice,
+      products: body.products.map(product => ({
+        productID: product.productID,
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity
+      }))
     });
   });
 }
@@ -104,10 +124,23 @@ exports.getCartEntity = function(userID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = { 
-    "userID":34,
-    "cartBody" : "This is the costumer's cart"
+    "userID": 4221,
+    "totalPrice":26.97,
+    "cartBody": "This is the costumer's cart",
+    "products" : [ {
+    "quantity" : 3,
+    "productID" : 14,
+    "price" : 8.99,
+    "name" : "3-day ticket"
+  }, {
+    "quantity" : 3,
+    "productID" : 14,
+    "price" : 8.99,
+    "name" : "3-day ticket"
+  } ]
+    
     };
-    if (userID !== 34 || !Object.keys(examples).length) {
+    if (userID !== 4221 || !Object.keys(examples).length) {
       resolve({
         status: 404,
         body: {
@@ -136,11 +169,34 @@ exports.setCartAttributes = function(body,userID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-      "userID" : 64,
-      "cartBody" : "This is the costumer's cart"
+      "userID": 4221,
+      "totalPrice":26.97,
+      "cartBody": "This is the costumer's cart",
+      "products" : [ {
+      "quantity" : 3,
+      "productID" : 14,
+      "price" : 8.99,
+      "name" : "3-day ticket"
+    }, {
+      "quantity" : 3,
+      "productID" : 14,
+      "price" : 8.99,
+      "name" : "3-day ticket"
+    } ]  
     };
 
-    if (body.userID !== 64) {
+    if (
+      body.userID !== 4221 || 
+      body.totalPrice !== 26.97 ||
+      body.cartBody !=="This is the costumer's cart"||
+      !body.products.every(product =>
+        product.quantity === 3 &&
+        product.productID === 14 &&
+        product.price === 8.99 &&
+        product.name === "3-day ticket"
+      )
+
+       ) {
       resolve({
         status: 404,
         body: {
@@ -152,10 +208,17 @@ exports.setCartAttributes = function(body,userID) {
     // Success
     resolve({
       status: 200,
-      body: {
+      body:{
         userID : body.userID,
-        cartBody: body.cartBody
-      }
+        cartBody: body.cartBody,
+        totalPrice:body.totalPrice,
+        products: body.products.map(product => ({
+        productID: product.productID,
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity
+      }))
+    }
       });
   });
 }
