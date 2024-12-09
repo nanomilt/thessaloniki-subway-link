@@ -23,8 +23,8 @@ jobs:
       - name: Make ava Executable
         run: chmod +x ./node_modules/.bin/ava
     
-      - name: Run Tests with ava
-        run: ./node_modules/.bin/ava npm test
+      - name: Run Tests with c8
+        run: ./node_modules/.bin/c8 npm test
 
         
       
