@@ -24,6 +24,16 @@ exports.announcementEntity = function(body) {
       return;
     }
 
+    if (body.announcementTitle === undefined) {
+      resolve({
+        status: 400,
+        body: {
+          message: "Announcement without a title"
+        }
+      });
+    }
+
+    // Success
     resolve({
       announcementID: body.announcementID,
       announcementTitle: body.announcementTitle,
@@ -58,13 +68,12 @@ exports.getAnnouncementEntity = function(announcementID) {
         }
       });
     }
-    else {
-      // Success
-      resolve({
-        status: 200,
-        body: examples[Object.keys(examples)[0]]
-      });
-    }
+    
+    // Success
+    resolve({
+      status: 200,
+      body: examples[Object.keys(examples)[0]]
+    });
   });
 }
 
@@ -86,6 +95,15 @@ exports.setAnnouncementAttributes = function(body) {
       "announcementTitle" : "Venizelou station",
       "announcementBody" : "Venizelou station will remain closed due to maintenance"
     };
+
+    if (body.announcementID === undefined) {
+      resolve({
+        status: 404,
+        body: {
+          message: "Announcement ID is empty"
+        }
+      });
+    }
 
     if (body.announcementID !== 154) {
       resolve({
@@ -136,16 +154,16 @@ exports.deleteAnnouncementEntity = function(body) {
         }
       });
     }
-    else {
-      resolve({
-        status: 200,
-        message: "Announcement deleted",
-        body: {
-          announcementID: body.announcementID,
-          announcementTitle: body.announcementTitle,
-          announcementBody: body.announcementBody
-        }
-      });
-    }
+
+    // Success
+    resolve({
+      status: 200,
+      message: "Announcement deleted",
+      body: {
+        announcementID: body.announcementID,
+        announcementTitle: body.announcementTitle,
+        announcementBody: body.announcementBody
+      }
+    });
   });
 }
