@@ -15,7 +15,28 @@ jobs:
           node-version: 16
 
       - name: Download dependencies
-        run: npm install
+        run: npm install 
 
-      - name: Run tests
+      - name: Make c8 Executable
+        run: chmod +x ./node_modules/.bin/c8
+
+      - name: Make ava Executable
+        run: chmod -R a+rwx ./node_modules/.bin/c8
+    
+      - name: Run Tests
         run: npm run test
+
+  deploy:
+    name: Deploy
+    needs: [ci]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
+        
+      
+      

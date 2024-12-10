@@ -149,4 +149,3 @@ exports.deleteAnnouncementEntity = function(body) {
     }
   });
 }
-
