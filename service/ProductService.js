@@ -180,6 +180,28 @@ exports.getProductEntity = function(productId, quantity) {
 exports.setProductAttributes = function(body, productId) {
   return new Promise(function(resolve, reject) {
     if (productId === 14) { // Assuming we're working with product 14
+      const namePattern = /^\d+-day ticket$/; // Regular expression to test if  *-day ticket where * is a positive integer
+
+      if (!namePattern.test(body.name)) {
+        resolve({
+          status: 400,
+          body: {
+            message: "Invalid product name format"
+          }
+        });
+        return;
+      }
+
+      if(body.price < 0) {
+        resolve({
+          status: 400,
+          body: {
+            message: "Price cannot be negative"
+          }
+        });
+        return;
+      }
+
       resolve({
         status: 200,
         message: "Product updated successfully",
@@ -203,18 +225,31 @@ exports.setProductAttributes = function(body, productId) {
 
 exports.productEntity = function(body) {
   return new Promise(function(resolve, reject) {
-    // Handle empty product case
+    // Check if body has required properties
     if (Object.keys(body).length === 0) {
       resolve(undefined);
       return;
     }
 
+    if (body.price > 20) {
+      resolve({
+        status: 400,
+        body: {
+          message: "Price cannot exceed 20"
+        }
+      });
+      return;
+    }
+
     // Handle valid product case
     resolve({
-      quantity: body.quantity,
-      productId: body.productId,
-      price: body.price,
-      name: body.name
+      status: 200,
+      body: {
+        quantity: body.quantity,
+        productId: body.productId,
+        price: body.price,
+        name: body.name
+      }
     });
   });
 }
