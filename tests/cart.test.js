@@ -3,6 +3,9 @@ const test = require('ava');
 const { cartEntity } = require('../service/CartService.js'); 
 const { getCartEntity } = require('../service/CartService.js');
 const { setCartAttributes} = require('../service/CartService.js');
+const { confirmGeneratePOST} = require('../service/CartService.js');
+const { setCartProductAttributes} = require('../service/CartService.js');
+const { confirmPOST} = require('../service/CartService.js');
 
 test('POST /cart should create a cart page', async (t) => {
   const newCart = {

@@ -4,16 +4,6 @@
       timeout: 10000
     });
   
-    // it('shows product section', () => {
-    //   cy.get('.opblock-tag-section')
-    //     .contains('product')
-    //     .click()
-  
-    //   // Verify endpoint documentation
-    //   cy.contains('GET /product/{productId}').should('be.visible')
-    //   cy.contains('Information about products').should('be.visible')
-    // });
-  
     it('can try out POST cart endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
@@ -74,11 +64,13 @@
       
         cy.contains('Try it out').click();
 
+
         // Target the input field for "user-id" and type the ID
         cy.get('input[type="text"][placeholder="user-id - The ID of a user"]', { timeout: 10000 })
           .should('be.visible') // Ensure the input is visible
           .type('0'); // Replace with the desired user ID
       
+          
       
       cy.contains('Execute')
         .click()
@@ -87,6 +79,7 @@
       cy.contains('200').should('be.visible')
   
     });
+    
   
     it('can try out PUT cart endpoint', () => {
       cy.get('.opblock-tag-section')
