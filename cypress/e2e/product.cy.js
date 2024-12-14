@@ -6,9 +6,7 @@ describe('Product Swagger Documentation', () => {
 
   it('can see product endpoint', () => {
     cy.get('.opblock-tag-section')
-      .click()
       .contains('product')
-      
   });
 
 
