@@ -7,7 +7,8 @@ const { productEntity } = require("../service/ProductService.js");
 
 
 test('GET /product/{productId} should return a product', async (t) => {  
-    const ProductEntity = await getProductEntity(14, 3); // 14: Can combine these tests into one test with more dynamic productId
+    // Test with valid attributes
+    const ProductEntity = await getProductEntity(14, 3); 
     
     console.log(ProductEntity);
 
@@ -19,7 +20,7 @@ test('GET /product/{productId} should return a product', async (t) => {
 });
 
 test('GET /product/{productId} should return 404 for non-existent product', async (t) => {
-    // Test with invalid product ID (e.g., 999)
+    // Test with invalid productID (e.g., 999)
     const nonExistentProduct = await getProductEntity(999, 3);
     console.log('Non-existent product test:', nonExistentProduct);
     
@@ -43,16 +44,18 @@ test('GET /product/{productId} should handle different quantities', async (t) =>
 
 
 test('DELETE /product/{productId} should delete a product', async (t) => {
-        const response = await deleteProductEntity(14, "3-day ticket", 3, 8.99); // Assuming 14 is the productId to delete
+    // Test with valid attributes
+    const response = await deleteProductEntity(14, "3-day ticket", 3, 8.99); 
         
-        console.log(response);
+    console.log(response);
 
-        t.is(response.status, 200);
-        t.is(response.message, "Product deleted successfully");
+    t.is(response.status, 200);
+    t.is(response.message, "Product deleted successfully");
 });
 
-test('DELETE /product/{productId} should return 404 for non-existent product ID', async (t) => {
-    const response = await deleteProductEntity(999, "3-day ticket", 3, 8.99); // Assuming 999 is the productId to delete
+test('DELETE /product/{productId} should return 404 for non-existent productID', async (t) => {
+    // Test with invalid productID (e.g., 999)
+    const response = await deleteProductEntity(999, "3-day ticket", 3, 8.99); 
 
     console.log(response);
 
@@ -60,8 +63,9 @@ test('DELETE /product/{productId} should return 404 for non-existent product ID'
     t.is(response.body.message, "Product not found");
 });
 
-test('DELETE /product/{productId} should return 404 for valid Id but invalid product data', async (t) => {
-    const response = await deleteProductEntity(14, "2-day ticket", 5, 15.99); // Assuming 999 is the productId to delete
+test('DELETE /product/{productId} should return 404 for valid productID but invalid product attributes', async (t) => {
+    // Test with valid productID but invalid product attributes
+    const response = await deleteProductEntity(14, "2-day ticket", 5, 15.99); 
 
     console.log(response);
 
@@ -74,6 +78,7 @@ test('DELETE /product/{productId} should return 404 for valid Id but invalid pro
 
 
 test('PUT /product/{productId} should update product attributes', async (t) => {
+    // Test with new attributes
     const updatedProduct = {
         "quantity": 5,
         "price": 10.99,
@@ -92,6 +97,7 @@ test('PUT /product/{productId} should update product attributes', async (t) => {
 });
 
 test('PUT /product/{productId} with invalid productId', async (t) => {
+    // Test with invalid productID (e.g., 10)
     const updatedProduct = {
         "quantity": 5,
         "price": 10.99,
@@ -106,6 +112,7 @@ test('PUT /product/{productId} with invalid productId', async (t) => {
 });
 
 test('PUT /product/{productId} with invalid product name format', async (t) => {
+    // Test with invalid product name format
     const updatedProduct = {
         "quantity": 5,
         "price": 10.99,
@@ -120,6 +127,7 @@ test('PUT /product/{productId} with invalid product name format', async (t) => {
 });
 
 test('PUT /product/{productId} with invalid product price', async (t) => {
+    // Test with invalid product price
     const updatedProduct = {
         "quantity": 5,
         "price": -10.99,
@@ -134,6 +142,7 @@ test('PUT /product/{productId} with invalid product price', async (t) => {
 });
 
 test('POST /product should create a new product', async (t) => {
+    // Test with new attributes
     const newProduct = {
         "quantity": 3,
         "productId": 14,
@@ -153,7 +162,7 @@ test('POST /product should create a new product', async (t) => {
 });
 
 test('POST /product should handle empty examples', async (t) => {
-    // Force examples to be empty
+    // Test with empty product attributes
     const emptyProduct = {};
     
     const response = await productEntity(emptyProduct);
@@ -163,6 +172,7 @@ test('POST /product should handle empty examples', async (t) => {
 });
 
 test('POST /product should handle invalid product price', async (t) => {
+    // Test with new attributes, but invalid product price
     const newProduct = {
         "quantity": 3,
         "productId": 14,
@@ -176,11 +186,3 @@ test('POST /product should handle invalid product price', async (t) => {
     t.is(response.status, 400);
     t.is(response.body.message, "Price cannot exceed 20");
 })
-
-
-/** 
- * TODO Test to update a product that doesn't exist
- * TODO Test to return a product with invalid attributes (???)
- * TODO Add more tests 
- * TODO I need one good scenario and 2-3 bad scenarios for each endpoint
-*/

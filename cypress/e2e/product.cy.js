@@ -4,15 +4,13 @@ describe('Product Swagger Documentation', () => {
     timeout: 10000
   });
 
-  // it('shows product section', () => {
-  //   cy.get('.opblock-tag-section')
-  //     .contains('product')
-  //     .click()
+  it('can see product endpoint', () => {
+    cy.get('.opblock-tag-section')
+      .click()
+      .contains('product')
+      
+  });
 
-  //   // Verify endpoint documentation
-  //   cy.contains('GET /product/{productId}').should('be.visible')
-  //   cy.contains('Information about products').should('be.visible')
-  // });
 
   it('can try out POST product endpoint', () => {
     cy.get('.opblock-tag-section')
@@ -64,15 +62,8 @@ describe('Product Swagger Documentation', () => {
     cy.contains('GET​/product​/{productID}').should('be.visible')
       .click()
 
-    // cy.contains('GET /product/{productID}')
-    //   .click()
-   
-    
     cy.contains('Try it out').click()
     
-    // cy.get('input[placeholder="productId"]')
-    //   .type('14')
-
     cy.get('input[type="text"][placeholder="productID - The ID of the product"]')
       .type('14')
     
@@ -152,5 +143,3 @@ describe('Product Swagger Documentation', () => {
 
 });
 
-//add response 400 to git repo api documentation
-//
