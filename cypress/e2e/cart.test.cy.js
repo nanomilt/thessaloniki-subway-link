@@ -83,7 +83,7 @@
   
     it('can try out PUT cart endpoint', () => {
       cy.get('.opblock-tag-section')
-        .contains('product')
+        .contains('cart')
   
         cy.contains('PUT​/user​/{user-id}​/cart').should('be.visible')
         .click()
