@@ -15,14 +15,14 @@ describe("Home page", () => {
         // Check GET endpoint
         cy.contains("GET​/announcement​/{announcement-id}").should('exist').click();
         cy.contains('Try it out').should('exist').click();
-        cy.get('#announcement-id').type('154');
+        cy.get('input[type="text"][placeholder="announcement-id - The ID ot the announcement"]').type('154');
         cy.contains('Execute').should('exist').click();
         cy.contains('Successful operation').should('exist')
 
         // Check PUT endpoint
         cy.contains("PUT​/announcement​/{announcement-id}").should('exist').click();
         cy.contains('Try it out').should('exist').click();
-        cy.get('#announcement-id').type('154');
+        cy.get('input[type="text"][placeholder="announcement-id - The ID of the announcement to be modified"]').type('154');
         cy.contains('Execute').should('exist').click();
 
         // Check DELETE endpoint
