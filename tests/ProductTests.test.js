@@ -7,7 +7,8 @@ const { productEntity } = require("../service/ProductService.js");
 
 
 test('GET /product/{productId} should return a product', async (t) => {  
-    const ProductEntity = await getProductEntity(14, 3); // 14: Can combine these tests into one test with more dynamic productId
+    // Test with valid attributes
+    const ProductEntity = await getProductEntity(14, 3); 
     
     console.log(ProductEntity);
 
@@ -19,45 +20,13 @@ test('GET /product/{productId} should return a product', async (t) => {
 });
 
 test('GET /product/{productId} should return 404 for non-existent product', async (t) => {
-    // Test with invalid product ID (e.g., 999)
+    // Test with invalid productID (e.g., 999)
     const nonExistentProduct = await getProductEntity(999, 3);
     console.log('Non-existent product test:', nonExistentProduct);
     
     t.is(nonExistentProduct.status, 404);
     t.is(nonExistentProduct.body.message, "Product not found");
 });
-
-
-test('DELETE /product/{productId} should delete a product', async (t) => {
-        const response = await deleteProductEntity(14, "3-day ticket", 3, 8.99); // Assuming 14 is the productId to delete
-        
-        console.log(response);
-
-        t.is(response.status, 200);
-        t.is(response.message, "Product deleted successfully");
-});
-
-test('DELETE /product/{productId} should return 404 for non-existent product ID', async (t) => {
-    const response = await deleteProductEntity(999, "3-day ticket", 3, 8.99); // Assuming 999 is the productId to delete
-
-    console.log(response);
-
-    t.is(response.status, 404);
-    t.is(response.body.message, "Product not found");
-});
-
-test('DELETE /product/{productId} should return 404 for valid Id but invalid product data', async (t) => {
-    const response = await deleteProductEntity(14, "2-day ticket", 5, 15.99); // Assuming 999 is the productId to delete
-
-    console.log(response);
-
-    t.is(response.status, 404);
-    t.falsy(response.body.name === "3-day ticket");
-    t.falsy(response.body.quantity === 3);
-    t.falsy(response.body.price === 8.99);
-    t.is(response.body.message, "Product not found");
-});
-
 
 test('GET /product/{productId} should handle different quantities', async (t) => {
     // Test valid quantity
@@ -73,7 +42,43 @@ test('GET /product/{productId} should handle different quantities', async (t) =>
     t.is(invalidProduct.message, "Quantity exceeds limit");
 });
 
+
+test('DELETE /product/{productId} should delete a product', async (t) => {
+    // Test with valid attributes
+    const response = await deleteProductEntity(14, "3-day ticket", 3, 8.99); 
+        
+    console.log(response);
+
+    t.is(response.status, 200);
+    t.is(response.message, "Product deleted successfully");
+});
+
+test('DELETE /product/{productId} should return 404 for non-existent productID', async (t) => {
+    // Test with invalid productID (e.g., 999)
+    const response = await deleteProductEntity(999, "3-day ticket", 3, 8.99); 
+
+    console.log(response);
+
+    t.is(response.status, 404);
+    t.is(response.body.message, "Product not found");
+});
+
+test('DELETE /product/{productId} should return 404 for valid productID but invalid product attributes', async (t) => {
+    // Test with valid productID but invalid product attributes
+    const response = await deleteProductEntity(14, "2-day ticket", 5, 15.99); 
+
+    console.log(response);
+
+    t.is(response.status, 404);
+    t.falsy(response.body.name === "3-day ticket");
+    t.falsy(response.body.quantity === 3);
+    t.falsy(response.body.price === 8.99);
+    t.is(response.body.message, "Product not found");
+});
+
+
 test('PUT /product/{productId} should update product attributes', async (t) => {
+    // Test with new attributes
     const updatedProduct = {
         "quantity": 5,
         "price": 10.99,
@@ -92,6 +97,7 @@ test('PUT /product/{productId} should update product attributes', async (t) => {
 });
 
 test('PUT /product/{productId} with invalid productId', async (t) => {
+    // Test with invalid productID (e.g., 10)
     const updatedProduct = {
         "quantity": 5,
         "price": 10.99,
@@ -105,7 +111,38 @@ test('PUT /product/{productId} with invalid productId', async (t) => {
     t.is(response.body.message, "Product not found");
 });
 
+test('PUT /product/{productId} with invalid product name format', async (t) => {
+    // Test with invalid product name format
+    const updatedProduct = {
+        "quantity": 5,
+        "price": 10.99,
+        "name": "2.5-day ticket"
+    };
+
+    const response = await setProductAttributes(updatedProduct, 14);
+    console.log('Update product test:', response);
+
+    t.is(response.status, 400);
+    t.is(response.body.message, "Invalid product name format");
+});
+
+test('PUT /product/{productId} with invalid product price', async (t) => {
+    // Test with invalid product price
+    const updatedProduct = {
+        "quantity": 5,
+        "price": -10.99,
+        "name": "3-day ticket"
+    };
+
+    const response = await setProductAttributes(updatedProduct, 14);
+    console.log('Update product test:', response);
+
+    t.is(response.status, 400);
+    t.is(response.body.message, "Price cannot be negative");
+});
+
 test('POST /product should create a new product', async (t) => {
+    // Test with new attributes
     const newProduct = {
         "quantity": 3,
         "productId": 14,
@@ -117,14 +154,15 @@ test('POST /product should create a new product', async (t) => {
     console.log('Create product test:', response);
 
     t.truthy(response);
-    t.is(response.quantity, 3);
-    t.is(response.productId, 14);
-    t.is(response.price, 8.99);
-    t.is(response.name, "3-day ticket");
+    t.is(response.status, 200);
+    t.is(response.body.quantity, 3);
+    t.is(response.body.productId, 14);
+    t.is(response.body.price, 8.99);
+    t.is(response.body.name, "3-day ticket");
 });
 
 test('POST /product should handle empty examples', async (t) => {
-    // Force examples to be empty
+    // Test with empty product attributes
     const emptyProduct = {};
     
     const response = await productEntity(emptyProduct);
@@ -133,10 +171,18 @@ test('POST /product should handle empty examples', async (t) => {
     t.is(response, undefined);
 });
 
+test('POST /product should handle invalid product price', async (t) => {
+    // Test with new attributes, but invalid product price
+    const newProduct = {
+        "quantity": 3,
+        "productId": 14,
+        "price": 20.99,
+        "name": "3-day ticket"
+    };
+    
+    const response = await productEntity(newProduct);
+    console.log('Invalid price test:', response);
 
-/** 
- * TODO Test to update a product that doesn't exist
- * TODO Test to update a product with invalid attributes (need to update the service)
- * TODO Test to return a product with invalid attributes (???)
- * TODO Add more tests 
- */
+    t.is(response.status, 400);
+    t.is(response.body.message, "Price cannot exceed 20");
+})

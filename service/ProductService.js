@@ -8,31 +8,44 @@
  * productId Integer The ID of the product
  * returns product_body
  **/
-// exports.getProductEntity = function(productId) {
-//   return new Promise(function(resolve, reject) {
-//     var examples = {};
-//     examples['application/json'] = {
-//       "quantity" : 3,
-//       "productId" : 14,
-//       "price" : 8.99,
-//       "name" : "3-day ticket"
-//     };
 
-//     if (Object.keys(examples).length > 0) {
-//       resolve({
-//         status: 200,
-//         body: examples[Object.keys(examples)[0]]
-//     });
-//     } else {
-//       resolve({
-//         status: 404,
-//         body: {
-//           message: "Product not found"
-//           }
-//         });
-//       }
-//     });
-//   }
+exports.getProductEntity = function(productId, quantity) {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = {
+      "quantity" : quantity,
+      "productId" : 14,
+      "price" : 8.99,
+      "name" : "3-day ticket"
+    };
+
+    if (productId !== 14 || !Object.keys(examples).length) {
+      resolve({
+        status: 404,
+        body: {
+          message: "Product not found"
+        }
+      });
+      return;
+    }
+
+    // Check quantity limit
+    if (quantity > 50) {
+      resolve({
+        status: 400,
+        message: "Quantity exceeds limit"
+      });
+      return;
+    }
+
+    // Success case
+    resolve({
+      status: 200,
+      body: examples[Object.keys(examples)[0]]
+    });
+  });
+}
+
 
 
 /**
@@ -42,27 +55,38 @@
  * body Product_body 
  * returns product_body
  **/
-// exports.productEntity = function(body) {
-//   return new Promise(function(resolve, reject) {
-//     var examples = {};
-//     examples['application/json'] = {
-//     "quantity" : 3,
-//     "productId" : 14,
-//     "price" : 8.99,
-//     "name" : "3-day ticket"
-// };
 
-//   if (Object.keys(examples).length > 0) {
-//     resolve(examples[Object.keys(examples)[0]]);
-//   } else {
-//     resolve(
-//       {
-//         status: undefined
-//       }
-//     );
-//     }
-//   });
-// }
+exports.productEntity = function(body) {
+  return new Promise(function(resolve, reject) {
+    // Check if body has required properties
+    if (Object.keys(body).length === 0) {
+      resolve(undefined);
+      return;
+    }
+
+    if (body.price > 20) {
+      resolve({
+        status: 400,
+        body: {
+          message: "Price cannot exceed 20"
+        }
+      });
+      return;
+    }
+
+    // Handle valid product case
+    resolve({
+      status: 200,
+      body: {
+        quantity: body.quantity,
+        productId: body.productId,
+        price: body.price,
+        name: body.name
+      }
+    });
+  });
+}
+
 
 
 /**
@@ -73,30 +97,52 @@
  * productId Integer The ID of the product to be modified
  * returns product_productid_body
  **/
-// exports.setProductAttributes = function(body,productId) {
-//   return new Promise(function(resolve, reject) {
-//     var examples = {};
-//     examples['application/json'] = {
-//   "quantity" : 3,
-//   "productId" : 14,
-//   "price" : 8.99,
-//   "name" : "3-day ticket"
-// };
-//   if (Object.keys(examples).length > 0) {
-//     resolve({
-//       status: 200,
-//       body: examples[Object.keys(examples)[0]]
-//   });
-//   } else {
-//     resolve({
-//       status: 404,
-//       body: {
-//         message: "Product not found"
-//         }
-//       });
-//     }
-//   });
-// }
+
+exports.setProductAttributes = function(body, productId) {
+  return new Promise(function(resolve, reject) {
+    if (productId === 14) { // Assuming we're working with product 14
+      const namePattern = /^\d+-day ticket$/; // Regular expression to test if  *-day ticket where * is a positive integer
+
+      if (!namePattern.test(body.name)) {
+        resolve({
+          status: 400,
+          body: {
+            message: "Invalid product name format"
+          }
+        });
+        return;
+      }
+
+      if(body.price < 0) {
+        resolve({
+          status: 400,
+          body: {
+            message: "Price cannot be negative"
+          }
+        });
+        return;
+      }
+
+      resolve({
+        status: 200,
+        message: "Product updated successfully",
+        body: {
+          quantity: body.quantity,
+          productId: 14,
+          price: body.price,
+          name: body.name
+        }
+      });
+    } else {
+      resolve({
+        status: 404,
+        body: {
+          message: "Product not found"
+        }
+      });
+    }
+  });
+}
 
 
 /**
@@ -139,83 +185,9 @@ exports.deleteProductEntity = function(productId, name, quantity, price) {
 }
 
 
-exports.getProductEntity = function(productId, quantity) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "quantity" : quantity,
-      "productId" : 14,
-      "price" : 8.99,
-      "name" : "3-day ticket"
-    };
 
-    if (productId !== 14 || !Object.keys(examples).length) {
-      resolve({
-        status: 404,
-        body: {
-          message: "Product not found"
-        }
-      });
-      return;
-    }
 
-    // Check quantity limit
-    if (quantity > 50) {
-      resolve({
-        status: 400,
-        message: "Quantity exceeds limit"
-      });
-      return;
-    }
 
-    // Success case
-    resolve({
-      status: 200,
-      body: examples[Object.keys(examples)[0]]
-    });
-  });
-}
 
-// In ProductService.js
-exports.setProductAttributes = function(body, productId) {
-  return new Promise(function(resolve, reject) {
-    if (productId === 14) { // Assuming we're working with product 14
-      resolve({
-        status: 200,
-        message: "Product updated successfully",
-        body: {
-          quantity: body.quantity,
-          productId: 14,
-          price: body.price,
-          name: body.name
-        }
-      });
-    } else {
-      resolve({
-        status: 404,
-        body: {
-          message: "Product not found"
-        }
-      });
-    }
-  });
-}
 
-exports.productEntity = function(body) {
-  return new Promise(function(resolve, reject) {
-    // Handle empty product case
-    if (Object.keys(body).length === 0) {
-      resolve(undefined);
-      return;
-    }
-
-    // Handle valid product case
-    resolve({
-      quantity: body.quantity,
-      productId: body.productId,
-      price: body.price,
-      name: body.name
-    });
-  });
-}
 
