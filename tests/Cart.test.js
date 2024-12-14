@@ -1,8 +1,4 @@
-const http = require('http');
 const test = require('ava');
-const listen = require("test-listen");
-const got = require('got');
-const app = require("../index.js");
 
 const { cartEntity } = require('../service/CartService.js'); 
 const { getCartEntity } = require('../service/CartService.js');
@@ -10,21 +6,6 @@ const { setCartAttributes} = require('../service/CartService.js');
 const { confirmGeneratePOST} = require('../service/CartService.js');
 const { setCartProductAttributes} = require('../service/CartService.js');
 const { confirmPOST} = require('../service/CartService.js');
-
-test.before(async (t) => {
-	t.context.server = http.createServer(app);
-    t.context.prefixUrl = await listen(t.context.server);
-    // const server = t.context.server.listen();
-    // const { port } = server.address();
-	t.context.got = got.extend({ 
-        responseType: "json", 
-        prefixUrl: t.context.prefixUrl,
-    });
-});
-
-test.after.always((t) => {
-	t.context.server.close();
-});
 
 
 test('POST /cart should create a cart page', async (t) => {
