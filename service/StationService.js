@@ -9,7 +9,7 @@
  * returns List
  **/
 exports.getStationArrivals = function(stationId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ "00-02", "00-09" ];
     if (Object.keys(examples).length > 0) {
@@ -29,7 +29,7 @@ exports.getStationArrivals = function(stationId) {
  * returns List
  **/
 exports.getStationConnections = function(stationId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ {
   "live-tracking" : [ "40.6297373", "22.9579498" ],
@@ -65,7 +65,7 @@ exports.getStationConnections = function(stationId) {
  * returns inline_response_201
  **/
 exports.getStationEntity = function(stationId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],
@@ -109,7 +109,7 @@ exports.getStationEntity = function(stationId) {
  * returns inline_response_201
  **/
 exports.setStationAttributes = function(body,stationId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],
@@ -152,7 +152,7 @@ exports.setStationAttributes = function(body,stationId) {
  * returns inline_response_201
  **/
 exports.stationEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],
@@ -195,7 +195,7 @@ exports.stationEntity = function(body) {
  * returns inline_response_201
  **/
 exports.deleteStationEntity = function(stationId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],

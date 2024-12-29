@@ -9,7 +9,7 @@
  * returns inline_response_200_2
  **/
 exports.userUser_idFavoritesDELETE = function(userId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "stationsNlines" : [ "", "" ]

@@ -12,7 +12,7 @@
  * returns inline_response_201_1
  **/
 exports.planJourney = function(body,depStation,arrStation,depTime) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = "";
     if (Object.keys(examples).length > 0) {

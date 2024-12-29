@@ -9,7 +9,7 @@
  * returns signup_body
  **/
 exports.getUserEntity = function(userId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,
@@ -35,7 +35,7 @@ exports.getUserEntity = function(userId) {
  * returns login_body
  **/
 exports.login = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,
@@ -62,7 +62,7 @@ exports.login = function(body) {
  * returns userid_profile_body
  **/
 exports.setUserAttributes = function(body,userId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,
@@ -88,7 +88,7 @@ exports.setUserAttributes = function(body,userId) {
  * returns signup_body
  **/
 exports.signup = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,
