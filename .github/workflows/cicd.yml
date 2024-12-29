@@ -21,7 +21,7 @@ jobs:
         run: chmod +x ./node_modules/.bin/c8
 
       - name: Make ava Executable
-        run: chmod -R a+rwx ./node_modules/.bin/c8
+        run: chmod -R a+rwx ./node_modules/.bin/ava
     
       - name: Run Tests
         run: npm run test
