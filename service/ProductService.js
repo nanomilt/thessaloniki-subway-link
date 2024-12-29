@@ -10,7 +10,7 @@
  **/
 
 exports.getProductEntity = function(productId, quantity) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "quantity" : quantity,
@@ -57,7 +57,7 @@ exports.getProductEntity = function(productId, quantity) {
  **/
 
 exports.productEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     // Check if body has required properties
     if (Object.keys(body).length === 0) {
       resolve(undefined);
@@ -99,7 +99,7 @@ exports.productEntity = function(body) {
  **/
 
 exports.setProductAttributes = function(body, productId) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     if (productId === 14) { // Assuming we're working with product 14
       const namePattern = /^\d+-day ticket$/; // Regular expression to test if  *-day ticket where * is a positive integer
 
@@ -154,7 +154,7 @@ exports.setProductAttributes = function(body, productId) {
  **/
 
 exports.deleteProductEntity = function(productId, name, quantity, price) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "quantity": 3,

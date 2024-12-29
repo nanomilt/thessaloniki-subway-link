@@ -3,7 +3,7 @@
 var utils = require('../utils/writer.js');
 var Announcement = require('../service/AnnouncementService');
 
-module.exports.announcementEntity = function announcementEntity (req, res, next, body) {
+module.exports.announcementEntity = function announcementEntity (_, res, body) {
   Announcement.announcementEntity(body)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -13,7 +13,7 @@ module.exports.announcementEntity = function announcementEntity (req, res, next,
     });
 };
 
-module.exports.getAnnouncementEntity = function getAnnouncementEntity (req, res, next, announcementId) {
+module.exports.getAnnouncementEntity = function getAnnouncementEntity (_, res, announcementId) {
   Announcement.getAnnouncementEntity(announcementId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -23,7 +23,7 @@ module.exports.getAnnouncementEntity = function getAnnouncementEntity (req, res,
     });
 };
 
-module.exports.setAnnouncementAttributes = function setAnnouncementAttributes (req, res, next, body, announcementId) {
+module.exports.setAnnouncementAttributes = function setAnnouncementAttributes (_, res, body, announcementId) {
   Announcement.setAnnouncementAttributes(body, announcementId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -33,7 +33,7 @@ module.exports.setAnnouncementAttributes = function setAnnouncementAttributes (r
     });
 };
 
-module.exports.deleteAnnouncementEntity = function deleteAnnouncementEntity (req, res, next, announcementId) {
+module.exports.deleteAnnouncementEntity = function deleteAnnouncementEntity (_, res, announcementId) {
   Announcement.deleteAnnouncementEntity(announcementId)
     .then(function (response) {
       utils.writeJson(res, response);

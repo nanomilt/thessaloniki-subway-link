@@ -8,8 +8,8 @@
  * stationId Integer The ID of the station
  * returns List
  **/
-exports.getStationArrivals = function(stationId) {
-  return new Promise(function(resolve, reject) {
+exports.getStationArrivals = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ "00-02", "00-09" ];
     if (Object.keys(examples).length > 0) {
@@ -28,8 +28,8 @@ exports.getStationArrivals = function(stationId) {
  * stationId Integer The ID of the station
  * returns List
  **/
-exports.getStationConnections = function(stationId) {
-  return new Promise(function(resolve, reject) {
+exports.getStationConnections = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ {
   "live-tracking" : [ "40.6297373", "22.9579498" ],
@@ -64,8 +64,8 @@ exports.getStationConnections = function(stationId) {
  * stationId Integer 
  * returns inline_response_201
  **/
-exports.getStationEntity = function(stationId) {
-  return new Promise(function(resolve, reject) {
+exports.getStationEntity = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],
@@ -108,8 +108,8 @@ exports.getStationEntity = function(stationId) {
  * stationId Integer The ID of the station to be modified
  * returns inline_response_201
  **/
-exports.setStationAttributes = function(body,stationId) {
-  return new Promise(function(resolve, reject) {
+exports.setStationAttributes = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],
@@ -151,8 +151,8 @@ exports.setStationAttributes = function(body,stationId) {
  * body Station_body 
  * returns inline_response_201
  **/
-exports.stationEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+exports.stationEntity = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],
@@ -194,8 +194,8 @@ exports.stationEntity = function(body) {
  * stationId Integer The ID of the station to be deleted
  * returns inline_response_201
  **/
-exports.deleteStationEntity = function(stationId) {
-  return new Promise(function(resolve, reject) {
+exports.deleteStationEntity = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "eta" : [ "00-02", "00-09" ],

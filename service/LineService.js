@@ -8,8 +8,8 @@
  * lineId Integer 
  * returns line_body
  **/
-exports.getLineEntity = function(lineId) {
-  return new Promise(function(resolve, reject) {
+exports.getLineEntity = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "live-tracking" : [ "40.6297373", "22.9579498" ],
@@ -36,8 +36,8 @@ exports.getLineEntity = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineLiveTracking = function(lineId) {
-  return new Promise(function(resolve, reject) {
+exports.getLineLiveTracking = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ "40.6297373", "22.9579498" ];
     if (Object.keys(examples).length > 0) {
@@ -56,8 +56,8 @@ exports.getLineLiveTracking = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineStations = function(lineId) {
-  return new Promise(function(resolve, reject) {
+exports.getLineStations = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ "Venizelou", "Venizelou" ];
     if (Object.keys(examples).length > 0) {
@@ -76,8 +76,8 @@ exports.getLineStations = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineStationsMap = function(lineId) {
-  return new Promise(function(resolve, reject) {
+exports.getLineStationsMap = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = "BlueLine.png";
     if (Object.keys(examples).length > 0) {
@@ -96,8 +96,8 @@ exports.getLineStationsMap = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineTimetable = function(lineId) {
-  return new Promise(function(resolve, reject) {
+exports.getLineTimetable = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ [ "10:00", "10:30" ], [ "10:10", "10:20" ] ];
     if (Object.keys(examples).length > 0) {
@@ -116,8 +116,8 @@ exports.getLineTimetable = function(lineId) {
  * body Line_body 
  * returns line_body
  **/
-exports.lineEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+exports.lineEntity = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "live-tracking" : [ "40.6297373", "22.9579498" ],
@@ -145,8 +145,8 @@ exports.lineEntity = function(body) {
  * lineId Integer The ID of the line to be modified
  * returns line_lineid_body
  **/
-exports.setLineAttributes = function(body,lineId) {
-  return new Promise(function(resolve, reject) {
+exports.setLineAttributes = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "live-tracking" : [ "40.6297373", "22.9579498" ],
@@ -173,8 +173,8 @@ exports.setLineAttributes = function(body,lineId) {
  * lineId Integer The ID of the line to be deleted
  * returns line_lineid_body
  **/
-exports.deleteLineEntity = function(lineId) {
-  return new Promise(function(resolve, reject) {
+exports.deleteLineEntity = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "live-tracking" : [ "40.6297373", "22.9579498" ],

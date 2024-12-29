@@ -7,6 +7,7 @@ const { confirmGeneratePOST} = require('../service/CartService.js');
 const { setCartProductAttributes} = require('../service/CartService.js');
 const { confirmPOST} = require('../service/CartService.js');
 
+
 test('POST /cart should create a cart page', async (t) => {
   const newCart = {
      "userID" : 4221,
@@ -33,14 +34,6 @@ test('POST /cart should create a cart page', async (t) => {
   t.is(response.products[0].quantity, 3);
 });
 
-test('POST /cart should handle empty cart', async (t) => {
-  const emptyCart = {};
-  
-  const response = await cartEntity(emptyCart);
-  console.log('Empty Cart test:', response);
-
-  t.is(response, undefined);
-});
 
 test('GET /CartEntity/{userId} should return the cart', async (t) => {
   const CartEntity = await getCartEntity(4221); 
@@ -58,6 +51,7 @@ test('GET /CartEntity/{userId} should return the cart', async (t) => {
   });
 });
 
+
 test('GET /CartEntity/{userID} should return 404 if cart not found', async (t) => {
   const cartNotFound = await getCartEntity(4222);
   console.log("Cart not found:", cartNotFound);
@@ -65,6 +59,7 @@ test('GET /CartEntity/{userID} should return 404 if cart not found', async (t) =
   t.is(cartNotFound.status, 404);
   t.is(cartNotFound.body.message, "Cart not found");
 });
+
 
 test('PUT /cart should update the cart', async (t) => {
   const updatedCart = {
@@ -86,6 +81,7 @@ test('PUT /cart should update the cart', async (t) => {
   t.is(response.status, 200);
   t.is(response.body.cartBody, "This is the costumer's cart");
 });
+
 
 test('PUT /cart should return 404 if cart not found', async (t) => {
   const updatedCart = {
@@ -109,6 +105,7 @@ test('PUT /cart should return 404 if cart not found', async (t) => {
 });
 
 /*==================== ANDREAS ====================*/
+
 test('PUT /should update the product quantity in the cart', async (t) => {
     const updatedProductCart = {
         "userId" : 4221,

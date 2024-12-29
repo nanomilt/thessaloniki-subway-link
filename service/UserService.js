@@ -8,8 +8,8 @@
  * userId Integer The ID of the user
  * returns signup_body
  **/
-exports.getUserEntity = function(userId) {
-  return new Promise(function(resolve, reject) {
+exports.getUserEntity = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,
@@ -34,8 +34,8 @@ exports.getUserEntity = function(userId) {
  * body Login_body 
  * returns login_body
  **/
-exports.login = function(body) {
-  return new Promise(function(resolve, reject) {
+exports.login = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,
@@ -61,8 +61,8 @@ exports.login = function(body) {
  * userId Integer The ID of the user to be modified
  * returns userid_profile_body
  **/
-exports.setUserAttributes = function(body,userId) {
-  return new Promise(function(resolve, reject) {
+exports.setUserAttributes = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,
@@ -87,8 +87,8 @@ exports.setUserAttributes = function(body,userId) {
  * body Signup_body 
  * returns signup_body
  **/
-exports.signup = function(body) {
-  return new Promise(function(resolve, reject) {
+exports.signup = function() {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "is-guest" : false,

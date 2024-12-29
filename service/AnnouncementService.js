@@ -9,7 +9,7 @@
  * returns announcement_body
  **/
 exports.announcementEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,
@@ -51,7 +51,7 @@ exports.announcementEntity = function(body) {
  * returns announcement_body
  **/
 exports.getAnnouncementEntity = function(announcementID) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,
@@ -87,7 +87,7 @@ exports.getAnnouncementEntity = function(announcementID) {
  * returns announcement_announcementID_body
  **/
 exports.setAnnouncementAttributes = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,
@@ -135,7 +135,7 @@ exports.setAnnouncementAttributes = function(body) {
  * returns announcement_announcementID_body
  **/
 exports.deleteAnnouncementEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,

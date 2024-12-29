@@ -3,7 +3,7 @@
 var utils = require('../utils/writer.js');
 var Station = require('../service/StationService');
 
-module.exports.getStationArrivals = function getStationArrivals (req, res, next, stationId) {
+module.exports.getStationArrivals = function getStationArrivals (_, res, stationId) {
   Station.getStationArrivals(stationId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -13,7 +13,7 @@ module.exports.getStationArrivals = function getStationArrivals (req, res, next,
     });
 };
 
-module.exports.getStationConnections = function getStationConnections (req, res, next, stationId) {
+module.exports.getStationConnections = function getStationConnections (_, res, stationId) {
   Station.getStationConnections(stationId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -23,7 +23,7 @@ module.exports.getStationConnections = function getStationConnections (req, res,
     });
 };
 
-module.exports.getStationEntity = function getStationEntity (req, res, next, stationId) {
+module.exports.getStationEntity = function getStationEntity (_, res, stationId) {
   Station.getStationEntity(stationId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -33,7 +33,7 @@ module.exports.getStationEntity = function getStationEntity (req, res, next, sta
     });
 };
 
-module.exports.setStationAttributes = function setStationAttributes (req, res, next, body, stationId) {
+module.exports.setStationAttributes = function setStationAttributes (_, res, body, stationId) {
   Station.setStationAttributes(body, stationId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -43,7 +43,7 @@ module.exports.setStationAttributes = function setStationAttributes (req, res, n
     });
 };
 
-module.exports.stationEntity = function stationEntity (req, res, next, body) {
+module.exports.stationEntity = function stationEntity (_, res, body) {
   Station.stationEntity(body)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -53,7 +53,7 @@ module.exports.stationEntity = function stationEntity (req, res, next, body) {
     });
 };
 
-module.exports.deleteStationEntity = function deleteStationEntity (req, res, next, stationId) {
+module.exports.deleteStationEntity = function deleteStationEntity (_, res, stationId) {
   Station.deleteStationEntity(stationId)
     .then(function (response) {
       utils.writeJson(res, response);

@@ -9,8 +9,8 @@
  * userId Integer The ID of the user
  * returns inline_response_200
  **/
-exports.cartEntity = function(body,userID) {
-  return new Promise(function(resolve, reject) {
+exports.cartEntity = function(body) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
     "userID": 4221,
@@ -59,8 +59,8 @@ exports.cartEntity = function(body,userID) {
  * userId Integer The ID of the user defining the corresponding cart
  * returns userid_profile_body
  **/
-exports.confirmGeneratePOST = function(body,userId) {
-  return new Promise(function(resolve, reject) {
+exports.confirmGeneratePOST = function(body) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "isGuest" : false,
@@ -94,8 +94,8 @@ exports.confirmGeneratePOST = function(body,userId) {
  * userId Integer The ID of the user defining the corresponding cart
  * returns inline_response_200_1
  **/
-exports.confirmPOST = function(body,userId) {
-  return new Promise(function(resolve, reject) {
+exports.confirmPOST = function(body) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
   "userId" : 4221,
@@ -143,7 +143,7 @@ exports.confirmPOST = function(body,userId) {
  * returns inline_response_200
  **/
 exports.getCartEntity = function(userID) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = { 
     "userID": 4221,
@@ -187,8 +187,8 @@ exports.getCartEntity = function(userID) {
  * userId Integer The ID of the user
  * returns inline_response_200
  **/
-exports.setCartAttributes = function(body,userID) {
-  return new Promise(function(resolve, reject) {
+exports.setCartAttributes = function(body) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "userID": 4221,
@@ -255,8 +255,8 @@ exports.setCartAttributes = function(body,userID) {
  * productId Integer 
  * returns inline_response_200
  **/
-exports.setCartProductAttributes = function(body,userId,productId) {
-  return new Promise(function(resolve, reject) {
+exports.setCartProductAttributes = function(body) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "userId" : 4221,
