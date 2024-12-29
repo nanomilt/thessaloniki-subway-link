@@ -8,7 +8,7 @@
  * stationId Integer The ID of the station
  * returns List
  **/
-exports.getStationArrivals = function(stationId) {
+exports.getStationArrivals = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ "00-02", "00-09" ];
@@ -28,7 +28,7 @@ exports.getStationArrivals = function(stationId) {
  * stationId Integer The ID of the station
  * returns List
  **/
-exports.getStationConnections = function(stationId) {
+exports.getStationConnections = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ {
@@ -64,7 +64,7 @@ exports.getStationConnections = function(stationId) {
  * stationId Integer 
  * returns inline_response_201
  **/
-exports.getStationEntity = function(stationId) {
+exports.getStationEntity = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -108,7 +108,7 @@ exports.getStationEntity = function(stationId) {
  * stationId Integer The ID of the station to be modified
  * returns inline_response_201
  **/
-exports.setStationAttributes = function(body,stationId) {
+exports.setStationAttributes = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -151,7 +151,7 @@ exports.setStationAttributes = function(body,stationId) {
  * body Station_body 
  * returns inline_response_201
  **/
-exports.stationEntity = function(body) {
+exports.stationEntity = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {

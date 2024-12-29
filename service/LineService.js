@@ -8,7 +8,7 @@
  * lineId Integer 
  * returns line_body
  **/
-exports.getLineEntity = function(lineId) {
+exports.getLineEntity = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -36,7 +36,7 @@ exports.getLineEntity = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineLiveTracking = function(lineId) {
+exports.getLineLiveTracking = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ "40.6297373", "22.9579498" ];
@@ -56,7 +56,7 @@ exports.getLineLiveTracking = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineStations = function(lineId) {
+exports.getLineStations = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ "Venizelou", "Venizelou" ];
@@ -76,7 +76,7 @@ exports.getLineStations = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineStationsMap = function(lineId) {
+exports.getLineStationsMap = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = "BlueLine.png";
@@ -96,7 +96,7 @@ exports.getLineStationsMap = function(lineId) {
  * lineId Integer The ID of the line
  * returns List
  **/
-exports.getLineTimetable = function(lineId) {
+exports.getLineTimetable = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = [ [ "10:00", "10:30" ], [ "10:10", "10:20" ] ];
@@ -116,7 +116,7 @@ exports.getLineTimetable = function(lineId) {
  * body Line_body 
  * returns line_body
  **/
-exports.lineEntity = function(body) {
+exports.lineEntity = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -145,7 +145,7 @@ exports.lineEntity = function(body) {
  * lineId Integer The ID of the line to be modified
  * returns line_lineid_body
  **/
-exports.setLineAttributes = function(body,lineId) {
+exports.setLineAttributes = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
