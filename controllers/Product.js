@@ -3,7 +3,7 @@
 var utils = require('../utils/writer.js');
 var Product = require('../service/ProductService');
 
-module.exports.getProductEntity = function getProductEntity (_, res, _, productId) {
+module.exports.getProductEntity = function getProductEntity (_, res, productId) {
   Product.getProductEntity(productId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -13,7 +13,7 @@ module.exports.getProductEntity = function getProductEntity (_, res, _, productI
     });
 };
 
-module.exports.productEntity = function productEntity (_, res, _, body) {
+module.exports.productEntity = function productEntity (_, res, body) {
   Product.productEntity(body)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -23,7 +23,7 @@ module.exports.productEntity = function productEntity (_, res, _, body) {
     });
 };
 
-module.exports.setProductAttributes = function setProductAttributes (_, res, _, body, productId) {
+module.exports.setProductAttributes = function setProductAttributes (_, res, body, productId) {
   Product.setProductAttributes(body, productId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -33,7 +33,7 @@ module.exports.setProductAttributes = function setProductAttributes (_, res, _, 
     });
 };
 
-module.exports.deleteProductEntity = function deleteProductEntity (_, res, _, productId) {
+module.exports.deleteProductEntity = function deleteProductEntity (_, res, productId) {
   Product.deleteProductEntity(productId)
     .then(function (response) {
       utils.writeJson(res, response);

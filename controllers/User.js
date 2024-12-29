@@ -3,7 +3,7 @@
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
 
-module.exports.getUserEntity = function getUserEntity (_, res, _, userId) {
+module.exports.getUserEntity = function getUserEntity (_, res, userId) {
   User.getUserEntity(userId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -13,7 +13,7 @@ module.exports.getUserEntity = function getUserEntity (_, res, _, userId) {
     });
 };
 
-module.exports.login = function login (_, res, _, body) {
+module.exports.login = function login (_, res, body) {
   User.login(body)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -23,7 +23,7 @@ module.exports.login = function login (_, res, _, body) {
     });
 };
 
-module.exports.setUserAttributes = function setUserAttributes (_, res, _, body, userId) {
+module.exports.setUserAttributes = function setUserAttributes (_, res, body, userId) {
   User.setUserAttributes(body, userId)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -33,7 +33,7 @@ module.exports.setUserAttributes = function setUserAttributes (_, res, _, body, 
     });
 };
 
-module.exports.signup = function signup (_, res, _, body) {
+module.exports.signup = function signup (_, res, body) {
   User.signup(body)
     .then(function (response) {
       utils.writeJson(res, response);
