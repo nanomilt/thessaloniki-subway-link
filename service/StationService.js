@@ -194,7 +194,7 @@ exports.stationEntity = function(body) {
  * stationId Integer The ID of the station to be deleted
  * returns inline_response_201
  **/
-exports.deleteStationEntity = function(stationId) {
+exports.deleteStationEntity = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {

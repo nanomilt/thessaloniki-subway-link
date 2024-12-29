@@ -9,7 +9,7 @@
  * userId Integer The ID of the user
  * returns inline_response_200
  **/
-exports.cartEntity = function(body,userID) {
+exports.cartEntity = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -59,7 +59,7 @@ exports.cartEntity = function(body,userID) {
  * userId Integer The ID of the user defining the corresponding cart
  * returns userid_profile_body
  **/
-exports.confirmGeneratePOST = function(body,userId) {
+exports.confirmGeneratePOST = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -94,7 +94,7 @@ exports.confirmGeneratePOST = function(body,userId) {
  * userId Integer The ID of the user defining the corresponding cart
  * returns inline_response_200_1
  **/
-exports.confirmPOST = function(body,userId) {
+exports.confirmPOST = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -187,7 +187,7 @@ exports.getCartEntity = function(userID) {
  * userId Integer The ID of the user
  * returns inline_response_200
  **/
-exports.setCartAttributes = function(body,userID) {
+exports.setCartAttributes = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
@@ -255,7 +255,7 @@ exports.setCartAttributes = function(body,userID) {
  * productId Integer 
  * returns inline_response_200
  **/
-exports.setCartProductAttributes = function(body,userId,productId) {
+exports.setCartProductAttributes = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {

@@ -8,7 +8,7 @@
  * userId Integer The ID of the user
  * returns inline_response_200_2
  **/
-exports.userUser_idFavoritesDELETE = function(userId) {
+exports.userUser_idFavoritesDELETE = function() {
   return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
