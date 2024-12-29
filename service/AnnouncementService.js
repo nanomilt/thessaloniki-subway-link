@@ -9,7 +9,7 @@
  * returns announcement_body
  **/
 exports.announcementEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,
@@ -24,6 +24,16 @@ exports.announcementEntity = function(body) {
       return;
     }
 
+    if (body.announcementTitle === undefined) {
+      resolve({
+        status: 400,
+        body: {
+          message: "Announcement without a title"
+        }
+      });
+    }
+
+    // Success
     resolve({
       announcementID: body.announcementID,
       announcementTitle: body.announcementTitle,
@@ -41,7 +51,7 @@ exports.announcementEntity = function(body) {
  * returns announcement_body
  **/
 exports.getAnnouncementEntity = function(announcementID) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,
@@ -58,13 +68,12 @@ exports.getAnnouncementEntity = function(announcementID) {
         }
       });
     }
-    else {
-      // Success
-      resolve({
-        status: 200,
-        body: examples[Object.keys(examples)[0]]
-      });
-    }
+    
+    // Success
+    resolve({
+      status: 200,
+      body: examples[Object.keys(examples)[0]]
+    });
   });
 }
 
@@ -78,7 +87,7 @@ exports.getAnnouncementEntity = function(announcementID) {
  * returns announcement_announcementID_body
  **/
 exports.setAnnouncementAttributes = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,
@@ -86,6 +95,15 @@ exports.setAnnouncementAttributes = function(body) {
       "announcementTitle" : "Venizelou station",
       "announcementBody" : "Venizelou station will remain closed due to maintenance"
     };
+
+    if (body.announcementID === undefined) {
+      resolve({
+        status: 404,
+        body: {
+          message: "Announcement ID is empty"
+        }
+      });
+    }
 
     if (body.announcementID !== 154) {
       resolve({
@@ -117,7 +135,7 @@ exports.setAnnouncementAttributes = function(body) {
  * returns announcement_announcementID_body
  **/
 exports.deleteAnnouncementEntity = function(body) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, _) {
     var examples = {};
     examples['application/json'] = {
       "announcementID" : 154,
@@ -136,16 +154,16 @@ exports.deleteAnnouncementEntity = function(body) {
         }
       });
     }
-    else {
-      resolve({
-        status: 200,
-        message: "Announcement deleted",
-        body: {
-          announcementID: body.announcementID,
-          announcementTitle: body.announcementTitle,
-          announcementBody: body.announcementBody
-        }
-      });
-    }
+
+    // Success
+    resolve({
+      status: 200,
+      message: "Announcement deleted",
+      body: {
+        announcementID: body.announcementID,
+        announcementTitle: body.announcementTitle,
+        announcementBody: body.announcementBody
+      }
+    });
   });
 }

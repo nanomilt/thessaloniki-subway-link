@@ -52,6 +52,21 @@ test('POST /announcement should handle empty announcement', async (t) => {
     t.is(response, undefined);
 });
 
+test('POST /announcement should handle empty announcement title', async (t) => {
+    const emptyAnnouncementTitle = {
+        "announcementID": 154,
+        "upload-date": "2000-01-23T04:56:07.000+00:00",
+        "announcementTitle": undefined,
+        "announcementBody": "Venizelou station will remain closed due to maintenance"
+    };
+    
+    const response = await announcementEntity(emptyAnnouncementTitle);
+    console.log('Empty Announcement Title test:', response);
+
+    t.is(response.status, 400);
+    t.is(response.body.message, "Announcement without a title");
+});
+
 test('PUT /announcement/{announcementId} should update an announcement', async (t) => {
     const updatedAnnouncement = {
         "announcementID" : 154,
@@ -81,6 +96,22 @@ test('PUT /announcement should return 404 if announcement not found', async (t) 
     t.is(response.status, 404);
     t.is(response.body.message, "Announcement not found");
 });
+
+test('PUT /announcement should return 404 if announcementID is empty', async (t) => {
+    const emptyAnnouncementID = {
+        "announcementID" : undefined,
+        "upload-date" : "2000-01-23T04:56:07.000+00:00",
+        "announcementTitle" : "Venizelou station",
+        "announcementBody" : "Venizelou station will remain closed due to maintenance"
+    };
+
+    const response = await setAnnouncementAttributes(emptyAnnouncementID);
+    // console.log('Edit Announcement test:', response);
+
+    t.is(response.status, 404);
+    t.is(response.body.message, "Announcement ID is empty");
+});
+
 
 test('DELETE /announcement/{announcementId} should delete an announcement', async (t) => {
     const deletedAnnouncement = {
