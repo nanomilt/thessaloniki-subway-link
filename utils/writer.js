@@ -7,37 +7,36 @@ exports.respondWithCode = function(code, payload) {
   return new ResponsePayload(code, payload);
 }
 
-var writeJson = exports.writeJson = function(response, arg1, arg2) {
-  var code;
-  var payload;
+function determineResponseCode(arg1, arg2) {
+  if (arg2 && Number.isInteger(arg2)) {
+    return arg2;
+  }
+  if (arg1 && Number.isInteger(arg1)) {
+    return arg1;
+  }
+  return 200; // default code
+}
 
-  if(arg1 && arg1 instanceof ResponsePayload) {
+function determinePayload(arg1) {
+  if (arg1 && typeof arg1 === 'object') {
+    return JSON.stringify(arg1, null, 2);
+  }
+  return arg1;
+}
+
+function sendResponse(response, code, payload) {
+  response.writeHead(code, {'Content-Type': 'application/json'});
+  response.end(payload);
+}
+
+var writeJson = exports.writeJson = function(response, arg1, arg2) {
+  if (arg1 && arg1 instanceof ResponsePayload) {
     writeJson(response, arg1.payload, arg1.code);
     return;
   }
 
-  if(arg2 && Number.isInteger(arg2)) {
-    code = arg2;
-  }
-  else {
-    if(arg1 && Number.isInteger(arg1)) {
-      code = arg1;
-    }
-  }
-  if(code && arg1) {
-    payload = arg1;
-  }
-  else if(arg1) {
-    payload = arg1;
-  }
+  const code = determineResponseCode(arg1, arg2);
+  const payload = determinePayload(arg1);
 
-  if(!code) {
-    // if no response code given, we default to 200
-    code = 200;
-  }
-  if(typeof payload === 'object') {
-    payload = JSON.stringify(payload, null, 2);
-  }
-  response.writeHead(code, {'Content-Type': 'application/json'});
-  response.end(payload);
+  sendResponse(response, code, payload);
 }
