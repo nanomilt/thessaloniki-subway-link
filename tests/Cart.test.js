@@ -1,5 +1,7 @@
+// Import AVA framework
 const test = require('ava');
 
+// Import service functions from Cart service
 const { cartEntity } = require('../service/CartService.js'); 
 const { getCartEntity } = require('../service/CartService.js');
 const { setCartAttributes} = require('../service/CartService.js');
@@ -7,7 +9,7 @@ const { confirmGeneratePOST} = require('../service/CartService.js');
 const { setCartProductAttributes} = require('../service/CartService.js');
 const { confirmPOST} = require('../service/CartService.js');
 
-
+// Test case for creating a new Cart
 test('POST /cart should create a cart page', async (t) => {
   const newCart = {
      "userID" : 4221,
@@ -34,7 +36,7 @@ test('POST /cart should create a cart page', async (t) => {
   t.is(response.products[0].quantity, 3);
 });
 
-
+// Test case for getting a cart with a specific userID
 test('GET /CartEntity/{userId} should return the cart', async (t) => {
   const CartEntity = await getCartEntity(4221); 
   
@@ -51,7 +53,7 @@ test('GET /CartEntity/{userId} should return the cart', async (t) => {
   });
 });
 
-
+// Test case for getting a cart not found error message
 test('GET /CartEntity/{userID} should return 404 if cart not found', async (t) => {
   const cartNotFound = await getCartEntity(4222);
   console.log("Cart not found:", cartNotFound);
@@ -60,7 +62,7 @@ test('GET /CartEntity/{userID} should return 404 if cart not found', async (t) =
   t.is(cartNotFound.body.message, "Cart not found");
 });
 
-
+// Test case for updating the cart
 test('PUT /cart should update the cart', async (t) => {
   const updatedCart = {
       "userID" : 4221,
@@ -77,12 +79,11 @@ test('PUT /cart should update the cart', async (t) => {
 
   const response = await setCartAttributes(updatedCart);
   
-
   t.is(response.status, 200);
-  t.is(response.body.cartBody, "This is the costumer's cart");
+  t.is(response.body.cartBody, "This is the customer's cart");
 });
 
-
+// Test case for an updated cart that wasn't found 
 test('PUT /cart should return 404 if cart not found', async (t) => {
   const updatedCart = {
       "userID" : 4222,
@@ -106,6 +107,7 @@ test('PUT /cart should return 404 if cart not found', async (t) => {
 
 /*==================== ANDREAS ====================*/
 
+// Test case for updating the product quantity in the cart
 test('PUT /should update the product quantity in the cart', async (t) => {
     const updatedProductCart = {
         "userId" : 4221,
@@ -123,11 +125,11 @@ test('PUT /should update the product quantity in the cart', async (t) => {
   
     const response = await setCartProductAttributes(updatedProductCart);
     
-  
     t.is(response.status, 200);
     t.is(response.body.cartBody, "This is the product's quantity in the cart");
   });
   
+  // Test case for an updated product quantity in the cart that wasn't found
   test('PUT /cart should return wrong quantity if there is not enough quantity of the product', async (t) => {
     const updatedProductCart = {
         "userId" : 4222,
@@ -151,6 +153,7 @@ test('PUT /should update the product quantity in the cart', async (t) => {
 
 });
 
+// Test case for confirming a payment process
 test('POST /should confirm a payment process', async (t) => {
     const newPayment = {
        "userId" : 4221,
@@ -178,6 +181,7 @@ test('POST /should confirm a payment process', async (t) => {
     t.is(response.products[0].name, "3-day ticket");
 });
 
+// Test case for a rejected payment request
 test('POST /payment page should handle a rejected payment', async (t) => {
     const rejectPayment = {};
     
@@ -187,7 +191,7 @@ test('POST /payment page should handle a rejected payment', async (t) => {
     t.is(response, undefined);
 });
 
-
+// Test case for successful QR Code generation
 test('POST /should generate QR codes for purchased items', async (t) => {
     const newQRCode = {
         "isGuest" : false,
@@ -209,6 +213,7 @@ test('POST /should generate QR codes for purchased items', async (t) => {
 
 });
 
+// Test case for unsuccessful QR Code generation
 test('POST /QR Code could not be generated', async (t) => {
     const rejectQRCode = {};
     

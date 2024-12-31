@@ -1,9 +1,11 @@
 describe('Product Swagger Documentation', () => {
-    beforeEach(() => {
-      cy.visit('http://localhost:8080/docs')  // or whatever your Swagger UI path is
+  // Before each test case, visit the documentation and set a timeout   
+  beforeEach(() => {
+      cy.visit('http://localhost:8080/docs') 
       timeout: 10000
     });
   
+    // Test case for POST Cart endpoint
     it('can try out POST cart endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
@@ -19,6 +21,7 @@ describe('Product Swagger Documentation', () => {
       cy.contains('200').should('be.visible')
     });
   
+    // Test case for modifying POST Cart example value endpoint
     it('can modify POST cart example value endpoint', () => {
       cy.get('.opblock-tag-section').contains('cart')
   
@@ -47,7 +50,7 @@ describe('Product Swagger Documentation', () => {
       cy.contains('201').should('be.visible')
     });
   
-  
+    // Test case for GET Cart endpoint
     it('can try out GET cart endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
@@ -69,6 +72,7 @@ describe('Product Swagger Documentation', () => {
       cy.contains('200').should('be.visible')
     });
     
+    // Test case for PUT Cart parameters update request
     it('can try out PUT cart endpoint', () => {
       cy.get('.opblock-tag-section').contains('cart')
   
@@ -101,6 +105,7 @@ describe('Product Swagger Documentation', () => {
       cy.contains('200').should('be.visible')
      })
 
+    // Test case for creating new POST cart endpoint 
     it('can try out POST cart endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
@@ -148,7 +153,7 @@ describe('Product Swagger Documentation', () => {
       cy.contains('201').should('be.visible')
     });
   
-  
+    // Test case for POST cart endpoint with correct ID
     it('can try out POST cart endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
@@ -166,6 +171,7 @@ describe('Product Swagger Documentation', () => {
       cy.contains('200').should('be.visible')
     });
     
+    // Test case for modifying POST cart parameter values
     it('can modify POST cart example value endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
@@ -190,6 +196,7 @@ describe('Product Swagger Documentation', () => {
       cy.contains('201').should('be.visible')
     });
   
+    // Test case for PUT cart endpoint search through user ID and product ID
     it('can try out PUT cart endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')

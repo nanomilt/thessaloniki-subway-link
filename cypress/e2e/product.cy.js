@@ -1,15 +1,18 @@
+// Frontend tests for products swagger documentation page.
 describe('Product Swagger Documentation', () => {
+  // Before each test case, visit the documentation and set a timeout   
   beforeEach(() => {
     cy.visit('http://localhost:8080/docs')  
     timeout: 10000
   });
 
+  // Test case for product endpoint visibility
   it('can see product endpoint', () => {
     cy.get('.opblock-tag-section')
       .contains('product')
   });
 
-
+  // Test case for POST product endpoint response
   it('can try out POST product endpoint', () => {
     cy.get('.opblock-tag-section')
       .contains('product')
@@ -26,6 +29,7 @@ describe('Product Swagger Documentation', () => {
     cy.contains('200').should('be.visible')
   });
 
+  // Test case for POST product example value creation endpoint
   it('can modify POST product example value endpoint', () => {
     cy.get('.opblock-tag-section')
       .contains('product')
@@ -50,7 +54,7 @@ describe('Product Swagger Documentation', () => {
     cy.contains('400').should('be.visible')
   });
 
-
+  // Test case for GET product endpoint response
   it('can try out GET product endpoint', () => {
     cy.get('.opblock-tag-section')
       .contains('product')
@@ -73,6 +77,7 @@ describe('Product Swagger Documentation', () => {
 
   });
 
+  // Test case for GET product example response endpoint
   it('can try out PUT product endpoint', () => {
     cy.get('.opblock-tag-section')
       .contains('product')
@@ -92,6 +97,7 @@ describe('Product Swagger Documentation', () => {
     cy.contains('200').should('be.visible')
   });
 
+  // Test case for PUT product example value update endpoint
   it('can modify PUT product example value endpoint', () => {
     cy.get('.opblock-tag-section')
       .contains('product')
@@ -120,6 +126,7 @@ describe('Product Swagger Documentation', () => {
 
   })
 
+  // Test case for DELETE product response endpoint
   it("can try out DELETE product endpoint", () => {
     cy.get('.opblock-tag-section')
       .contains('product')
