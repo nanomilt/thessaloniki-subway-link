@@ -13,19 +13,16 @@ describe('Product Swagger Documentation', () => {
   
       cy.contains('Try it out').click()
   
-     cy.contains('Execute')
-        .click()
+     cy.contains('Execute').click()
   
       cy.contains('Request body').should('be.visible')
       cy.contains('200').should('be.visible')
     });
   
     it('can modify POST cart example value endpoint', () => {
-      cy.get('.opblock-tag-section')
-        .contains('cart')
+      cy.get('.opblock-tag-section').contains('cart')
   
-      cy.contains('POST​/user​/{user-id}​/cart').should('be.visible')
-        .click()
+      cy.contains('POST​/user​/{user-id}​/cart').should('be.visible').click()
   
       cy.contains('Try it out').click()
   
@@ -43,8 +40,7 @@ describe('Product Swagger Documentation', () => {
   ]
         }`), { parseSpecialCharSequences: false }
   
-      cy.contains('Execute')
-        .click()
+      cy.contains('Execute').click()
   
       cy.contains('Request body').should('be.visible')
       cy.contains('Response').should('be.visible')
@@ -58,42 +54,32 @@ describe('Product Swagger Documentation', () => {
         .click()
         .click()
       
-      cy.contains('GET​/user​/{user-id}​/cart').should('be.visible')
-        .click()
+      cy.contains('GET​/user​/{user-id}​/cart').should('be.visible').click()
   
-      
-        cy.contains('Try it out').click();
+      cy.contains('Try it out').click();
 
-
-        // Target the input field for "user-id" and type the ID
-        cy.get('input[type="text"][placeholder="user-id - The ID of a user"]', { timeout: 10000 })
-          .should('be.visible') // Ensure the input is visible
-          .type('0'); // Replace with the desired user ID
+      // Target the input field for "user-id" and type the ID
+      cy.get('input[type="text"][placeholder="user-id - The ID of a user"]', { timeout: 10000 })
+        .should('be.visible') // Ensure the input is visible
+        .type('0'); // Replace with the desired user ID
       
-          
-      
-      cy.contains('Execute')
-        .click()
+      cy.contains('Execute').click()
   
       cy.contains('Responses').should('be.visible')
       cy.contains('200').should('be.visible')
-  
     });
     
-  
     it('can try out PUT cart endpoint', () => {
-      cy.get('.opblock-tag-section')
-        .contains('cart')
+      cy.get('.opblock-tag-section').contains('cart')
   
-        cy.contains('PUT​/user​/{user-id}​/cart').should('be.visible')
-        .click()
+      cy.contains('PUT​/user​/{user-id}​/cart').should('be.visible').click()
   
-        cy.contains('Try it out').click();
+      cy.contains('Try it out').click();
 
-        // Target the input field for "user-id" and type the ID
-        cy.get('input[type="text"][placeholder="user-id - The ID of the user"]', { timeout: 10000 })
-          .should('be.visible') // Ensure the input is visible
-          .type('0'); // Replace with the desired user ID
+      // Target the input field for "user-id" and type the ID
+      cy.get('input[type="text"][placeholder="user-id - The ID of the user"]', { timeout: 10000 })
+        .should('be.visible') // Ensure the input is visible
+        .type('0'); // Replace with the desired user ID
       
       cy.get('textarea').clear()
         .type(`{
@@ -109,13 +95,11 @@ describe('Product Swagger Documentation', () => {
   ]
       }`), { parseSpecialCharSequences: false }
   
-      cy.contains('Execute')
-        .click()
+      cy.contains('Execute').click()
   
       cy.contains('Responses').should('be.visible')
       cy.contains('200').should('be.visible')
-  
-    })
+     })
 
     it('can try out POST cart endpoint', () => {
       cy.get('.opblock-tag-section')
@@ -129,10 +113,8 @@ describe('Product Swagger Documentation', () => {
       cy.get('input[type="text"][placeholder="user-id - The ID of the user defining the corresponding cart"]')
         .type('14')
   
-     cy.contains('Execute')
-        .click()
+      cy.contains('Execute').click()
        
-  
       cy.contains('Response body').should('be.visible')
       cy.contains('200').should('be.visible')
     });
@@ -141,8 +123,7 @@ describe('Product Swagger Documentation', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
   
-      cy.contains('POST​/confirm').should('be.visible')
-        .click()
+      cy.contains('POST​/confirm').should('be.visible').click()
   
       cy.contains('Try it out').click()
   
@@ -160,8 +141,7 @@ describe('Product Swagger Documentation', () => {
   ]
   }`), { parseSpecialCharSequences: false }
   
-      cy.contains('Execute')
-        .click()
+      cy.contains('Execute').click()
   
       cy.contains('Request body').should('be.visible')
       cy.contains('Response').should('be.visible')
@@ -169,36 +149,33 @@ describe('Product Swagger Documentation', () => {
     });
   
   
-  it('can try out POST cart endpoint', () => {
-        cy.get('.opblock-tag-section')
-          .contains('cart')
+    it('can try out POST cart endpoint', () => {
+      cy.get('.opblock-tag-section')
+        .contains('cart')
     
-        cy.contains('POST​/confirm​/generate').should('be.visible')
-          .click()
+      cy.contains('POST​/confirm​/generate').should('be.visible').click()
     
-        cy.contains('Try it out').click()
+      cy.contains('Try it out').click()
   
-        cy.get('input[type="text"][placeholder="user-id - The ID of the user defining the corresponding cart"]')
+      cy.get('input[type="text"][placeholder="user-id - The ID of the user defining the corresponding cart"]')
         .type('14')
     
-       cy.contains('Execute')
-          .click()
+      cy.contains('Execute').click()
     
-        cy.contains('Response body').should('be.visible')
-        cy.contains('200').should('be.visible')
-      });
+      cy.contains('Response body').should('be.visible')
+      cy.contains('200').should('be.visible')
+    });
     
-      it('can modify POST cart example value endpoint', () => {
-        cy.get('.opblock-tag-section')
-          .contains('cart')
+    it('can modify POST cart example value endpoint', () => {
+      cy.get('.opblock-tag-section')
+        .contains('cart')
     
-        cy.contains('POST​/confirm​/generate').should('be.visible')
-          .click()
+      cy.contains('POST​/confirm​/generate').should('be.visible').click()
     
-        cy.contains('Try it out').click()
+      cy.contains('Try it out').click()
     
-        cy.get('textarea').clear()
-          .type(`{
+      cy.get('textarea').clear()
+        .type(`{
   "user-id": 4221,
   "is-guest": false,
   "email": "klpanagi@ece.auth.gr",
@@ -206,30 +183,28 @@ describe('Product Swagger Documentation', () => {
   "password": "SoftEng2024!"
   }`), { parseSpecialCharSequences: false }
     
-        cy.contains('Execute')
-          .click()
+      cy.contains('Execute').click()
     
-        cy.contains('Request body').should('be.visible')
-        cy.contains('Response').should('be.visible')
-        cy.contains('201').should('be.visible')
-      });
+      cy.contains('Request body').should('be.visible')
+      cy.contains('Response').should('be.visible')
+      cy.contains('201').should('be.visible')
+    });
   
     it('can try out PUT cart endpoint', () => {
       cy.get('.opblock-tag-section')
         .contains('cart')
   
-        cy.contains('PUT​/user​/{user-id}​/cart​/product​/{productID}').should('be.visible')
-        .click()
+      cy.contains('PUT​/user​/{user-id}​/cart​/product​/{productID}').should('be.visible').click()
   
-        cy.contains('Try it out').click();
+      cy.contains('Try it out').click();
   
         // Target the input field for "user-id" and type the ID
-        cy.get('input[type="text"][placeholder="user-id"]', { timeout: 10000 })
-          .should('be.visible') // Ensure the input is visible
-          .type('0'); // Replace with the desired user ID
-        cy.get('input[type="text"][placeholder="productID"]', { timeout: 10000 })
-          .should('be.visible') // Ensure the input is visible
-          .type('0'); // Replace with the desired user ID
+      cy.get('input[type="text"][placeholder="user-id"]', { timeout: 10000 })
+        .should('be.visible') // Ensure the input is visible
+        .type('0'); // Replace with the desired user ID
+      cy.get('input[type="text"][placeholder="productID"]', { timeout: 10000 })
+        .should('be.visible') // Ensure the input is visible
+        .type('0'); // Replace with the desired user ID
   
       cy.get('textarea').clear()
         .type(`{
@@ -245,11 +220,9 @@ describe('Product Swagger Documentation', () => {
   ]
   }`), { parseSpecialCharSequences: false }
    
-      cy.contains('Execute')
-        .click()
+      cy.contains('Execute').click()
   
       cy.contains('Responses').should('be.visible')
       cy.contains('200').should('be.visible')
-  
     });
 });
