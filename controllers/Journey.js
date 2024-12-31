@@ -3,8 +3,8 @@
 var utils = require('../utils/writer.js');
 var Journey = require('../service/JourneyService');
 
-module.exports.planJourney = function planJourney (res, body, depStation, arrStation, depTime) {
-  Journey.planJourney(body, depStation, arrStation, depTime)
+module.exports.planJourney = function planJourney (res, body) {
+  Journey.planJourney(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })
