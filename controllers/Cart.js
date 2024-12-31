@@ -53,7 +53,7 @@ module.exports.setCartAttributes = function setCartAttributes (_, res, body, use
     });
 };
 
-module.exports.setCartProductAttribute = function setCartProductAttribute (_, res, body, userId, productId) {
+module.exports.setCartProductAttribute = function setCartProductAttribute (res, body, userId, productId) {
   Cart.setCartProductAttribute(body, userId, productId)
     .then(function (response) {
       utils.writeJson(res, response);
