@@ -8,16 +8,16 @@ describe('Product Swagger Documentation', () => {
 
   // Test case for product endpoint visibility
   it('can see product endpoint', () => {
-    cy.get('.opblock-tag-section')
+    cy.get('.opblock-tag-section') // Selects all HTML elements from swagger webpage
       .contains('product')
   });
 
   // Test case for POST product endpoint response
   it('can try out POST product endpoint', () => {
-    cy.get('.opblock-tag-section')
+    cy.get('.opblock-tag-section') // 
       .contains('product')
 
-    cy.contains('POST​/product').should('be.visible')
+    cy.contains('POST​/product').should('be.visible') // /product copied and pasted from swagger website
       .click()
 
     cy.contains('Try it out').click()
@@ -26,7 +26,7 @@ describe('Product Swagger Documentation', () => {
       .click()
 
     cy.contains('Response body').should('be.visible')
-    cy.contains('200').should('be.visible')
+    cy.contains('200').should('be.visible') // Status code 200, only one swagger API response
   });
 
   // Test case for POST product example value creation endpoint
@@ -45,7 +45,7 @@ describe('Product Swagger Documentation', () => {
         "name": "2-day ticket",
         "price": 9.99,
         "quantity": 4
-      }`), { parseSpecialCharSequences: false }
+      }`), { parseSpecialCharSequences: false } // Example value not inserted correctly but still works
 
     cy.contains('Execute')
       .click()
