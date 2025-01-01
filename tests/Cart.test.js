@@ -14,7 +14,7 @@ test('POST /cart should create a cart page', async (t) => {
   const newCart = {
      "userID" : 4221,
      "totalPrice":26.97,
-     "cartBody": "This is the costumer's cart",
+     "cartBody": "This is the customer's cart",
      "products" : [ {
       "quantity" : 3,
       "productID" : 14,
@@ -28,7 +28,7 @@ test('POST /cart should create a cart page', async (t) => {
 
   t.truthy(response);
   t.is(response.userID, 4221);
-  t.is(response.cartBody, "This is the costumer's cart");
+  t.is(response.cartBody, "This is the customer's cart");
   t.is(response.totalPrice, 26.97);
   t.is(response.products[0].productID, 14);
   t.is(response.products[0].name, "3-day ticket");
@@ -66,7 +66,7 @@ test('GET /CartEntity/{userID} should return 404 if cart not found', async (t) =
 test('PUT /cart should update the cart', async (t) => {
   const updatedCart = {
       "userID" : 4221,
-      "cartBody" : "This is the costumer's cart",
+      "cartBody" : "This is the customer's cart",
       "totalPrice":26.97,
       "products" : [ {
       "quantity" : 3,
@@ -88,7 +88,7 @@ test('PUT /cart should return 404 if cart not found', async (t) => {
   const updatedCart = {
       "userID" : 4222,
       "totalPrice":26.97,
-      "cartBody" : "This is the costumer's cart",
+      "cartBody" : "This is the customer's cart",
       "products" : [ {
       "quantity" : 3,
       "productID" : 14,

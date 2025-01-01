@@ -14,7 +14,7 @@ exports.cartEntity = function(body) {
     examples['application/json'] = {
       "userID": 4221,
       "totalPrice":26.97,
-      "cartBody": "This is the costumer's cart",
+      "cartBody": "This is the customer's cart",
       "products" : [ {
       "quantity" : 3,
       "productID" : 14,
@@ -142,7 +142,7 @@ exports.getCartEntity = function(userID) {
     examples['application/json'] = { 
       "userID": 4221,
       "totalPrice":26.97,
-      "cartBody": "This is the costumer's cart",
+      "cartBody": "This is the customer's cart",
       "products" : [ {
       "quantity" : 3,
       "productID" : 14,
@@ -185,7 +185,7 @@ exports.setCartAttributes = function(body) {
     examples['application/json'] = {
       "userID": 4221,
       "totalPrice":26.97,
-      "cartBody": "This is the costumer's cart",
+      "cartBody": "This is the customer's cart",
       "products" : [ {
       "quantity" : 3,
       "productID" : 14,
@@ -200,7 +200,7 @@ exports.setCartAttributes = function(body) {
     if (
       body.userID !== 4221 || 
       body.totalPrice !== 26.97 ||
-      body.cartBody !=="This is the costumer's cart"||
+      body.cartBody !=="This is the customer's cart"||
       !body.products.every(product =>
         product.quantity === 3 &&
         product.productID === 14 &&
