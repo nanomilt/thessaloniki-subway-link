@@ -1,14 +1,6 @@
 'use strict';
 
 
-/**
- * Create a user''s cart
- * Create a user''s cart
- *
- * body Userid_cart_body_1 
- * userId Integer The ID of the user
- * returns inline_response_200
- **/
 exports.cartEntity = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
