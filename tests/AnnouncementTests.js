@@ -1,13 +1,15 @@
+// Import AVA framework
 const test = require('ava');
 
+// Import service functions from Announcement service
 const { announcementEntity } = require("../service/AnnouncementService.js");
 const { getAnnouncementEntity } = require("../service/AnnouncementService.js");
 const { setAnnouncementAttributes } = require("../service/AnnouncementService.js");
 const { deleteAnnouncementEntity } = require("../service/AnnouncementService.js");
 
-
+// Test case for getting an announcement by ID
 test('GET /announcement/{announcementId} should return an announcement', async (t) => {
-    const AnnouncementEntity = await getAnnouncementEntity(154); // 154: AnnouncementID TODO: generateTestID function
+    const AnnouncementEntity = await getAnnouncementEntity(154); 
     
     console.log(AnnouncementEntity);
 
@@ -17,6 +19,7 @@ test('GET /announcement/{announcementId} should return an announcement', async (
     t.truthy(AnnouncementEntity.body.announcementBody == "Venizelou station will remain closed due to maintenance");
 });
 
+// Test case for getting an announcement not found error message
 test('GET /announcement/{announcementId} should return 404 if announcement not found', async (t) => {
     const announcementNotFound = await getAnnouncementEntity(155); // 155: AnnouncementID TODO: generateTestID function
 
@@ -26,6 +29,7 @@ test('GET /announcement/{announcementId} should return 404 if announcement not f
     t.is(announcementNotFound.body.message, "Announcement not found");
 });
 
+// Test case for creating a new announcement
 test('POST /announcement should create an announcement', async (t) => {
     const newAnnouncement = {
         "announcementID": 154,
@@ -43,6 +47,7 @@ test('POST /announcement should create an announcement', async (t) => {
     t.is(response.announcementBody, "Venizelou station will remain closed due to maintenance");
 });
 
+// Test case for an empty announcement body
 test('POST /announcement should handle empty announcement', async (t) => {
     const emptyAnnouncement = {};
     
@@ -52,6 +57,7 @@ test('POST /announcement should handle empty announcement', async (t) => {
     t.is(response, undefined);
 });
 
+// Test case for an empty announcement title
 test('POST /announcement should handle empty announcement title', async (t) => {
     const emptyAnnouncementTitle = {
         "announcementID": 154,
@@ -67,6 +73,7 @@ test('POST /announcement should handle empty announcement title', async (t) => {
     t.is(response.body.message, "Announcement without a title");
 });
 
+// Test case for an updated announcement
 test('PUT /announcement/{announcementId} should update an announcement', async (t) => {
     const updatedAnnouncement = {
         "announcementID" : 154,
@@ -82,6 +89,7 @@ test('PUT /announcement/{announcementId} should update an announcement', async (
     t.is(response.body.announcementBody, "Venizelou station will remain closed due to maintenance");
 });
 
+// Test case for an announcement that wasn't found
 test('PUT /announcement should return 404 if announcement not found', async (t) => {
     const updatedAnnouncement = {
         "announcementID" : 155,
@@ -97,6 +105,7 @@ test('PUT /announcement should return 404 if announcement not found', async (t) 
     t.is(response.body.message, "Announcement not found");
 });
 
+// Test case for an empty announcementID
 test('PUT /announcement should return 404 if announcementID is empty', async (t) => {
     const emptyAnnouncementID = {
         "announcementID" : undefined,
@@ -112,7 +121,7 @@ test('PUT /announcement should return 404 if announcementID is empty', async (t)
     t.is(response.body.message, "Announcement ID is empty");
 });
 
-
+// Test case for a deleted announcement
 test('DELETE /announcement/{announcementId} should delete an announcement', async (t) => {
     const deletedAnnouncement = {
         "announcementID" : 154,
@@ -127,6 +136,7 @@ test('DELETE /announcement/{announcementId} should delete an announcement', asyn
     t.is(response.message, "Announcement deleted");
 });
 
+// Test case for a not found recently deleted announcement
 test('DELETE /announcement/{announcementId} should return 404 if announcement not found', async (t) => {
     const deletedAnnouncement = {
         "announcementID" : 155,

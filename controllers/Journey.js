@@ -1,14 +1,19 @@
 'use strict';
 
+// Import necessary modules
 var utils = require('../utils/writer.js');
 var Journey = require('../service/JourneyService');
 
-module.exports.planJourney = function planJourney ( body, depStation, arrStation, depTime) {
-  Journey.planJourney(body, depStation, arrStation, depTime)
+// Function to plan a user's journey
+module.exports.planJourney = function planJourney (res, body) {
+  // Call service function to plan a user's journey
+  Journey.planJourney(body)
     .then(function (response) {
-      utils.writeJson( response);
+      // Write client response
+      utils.writeJson(res, response);
     })
     .catch(function (response) {
-      utils.writeJson( response);
+      // Write client error response
+      utils.writeJson(res, response);
     });
 };
