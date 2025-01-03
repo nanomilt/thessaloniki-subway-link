@@ -3,7 +3,7 @@ const test = require('ava');
 
 // Import service functions from Cart service
 const { cartEntity } = require('../service/CartService.js'); 
-const { getCartEntity } = require('../service/CartService.js');
+const { getCartEntity } = require('../service/CartServiceExtension.js');
 const { setCartAttributes} = require('../service/CartServiceExtension.js');
 const { confirmGeneratePOST} = require('../service/CartService.js');
 const { setCartProductAttributes} = require('../service/CartServiceExtension.js');
