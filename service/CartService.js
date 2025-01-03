@@ -1,6 +1,5 @@
 'use strict';
 
-
 exports.cartEntity = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
@@ -40,17 +39,6 @@ exports.cartEntity = function(body) {
     });
   });
 }
-
-
-
-/**
- * Generate QR codes for purchased items
- * Generate QR codes for purchased items
- *
- * body Confirm_generate_body 
- * userId Integer The ID of the user defining the corresponding cart
- * returns userid_profile_body
- **/
 exports.confirmGeneratePOST = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
@@ -77,15 +65,6 @@ exports.confirmGeneratePOST = function(body) {
     });
   });
 }
-
-/**
- * Confirm a payment process
- * Confirm a payment process
- *
- * body Confirm_body 
- * userId Integer The ID of the user defining the corresponding cart
- * returns inline_response_200_1
- **/
 exports.confirmPOST = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
@@ -126,14 +105,6 @@ exports.confirmPOST = function(body) {
   });
 }
 
-
-/**
- * Return a user''s cart
- * Return a user''s cart
- *
- * userId Integer The ID of a user
- * returns inline_response_200
- **/
 exports.getCartEntity = function(userID) {
   return new Promise(function(resolve, _) {
     var examples = {};
@@ -171,14 +142,7 @@ exports.getCartEntity = function(userID) {
     }
     });
     }
-/**
- * Edit a user''s cart
- * Edit a user''s cart
- *
- * body Userid_cart_body 
- * userId Integer The ID of the user
- * returns inline_response_200
- **/
+
 exports.setCartAttributes = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
@@ -237,16 +201,6 @@ exports.setCartAttributes = function(body) {
   });
 }
 
-
-/**
- * Edit a user''s product quantity in the cart
- * Edit a user''s product quantity in the cart
- *
- * body Product_productid_body_1 
- * userId Integer 
- * productId Integer 
- * returns inline_response_200
- **/
 exports.setCartProductAttributes = function(body) {
   return new Promise(function(resolve, _) {
     var examples = {};
