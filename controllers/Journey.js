@@ -3,12 +3,12 @@
 var utils = require('../utils/writer.js');
 var Journey = require('../service/JourneyService');
 
-module.exports.planJourney = function planJourney (res, body, depStation, arrStation, depTime) {
+module.exports.planJourney = function planJourney ( body, depStation, arrStation, depTime) {
   Journey.planJourney(body, depStation, arrStation, depTime)
     .then(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson( response);
     })
     .catch(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson( response);
     });
 };
