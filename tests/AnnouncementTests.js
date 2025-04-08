@@ -1,5 +1,5 @@
 // Import AVA framework
- const test = require('ava');
+const test = require('ava');
 
 // Import service functions from Announcement service
 const { announcementEntity } = require("../service/AnnouncementService.js");
