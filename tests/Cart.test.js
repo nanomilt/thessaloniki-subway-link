@@ -36,6 +36,7 @@ test('POST /cart should create a cart page', async (t) => {
   t.is(response.products[0].quantity, 3);
 });
 
+
 // Test case for getting a cart with a specific userID
 test('GET /CartEntity/{userId} should return the cart', async (t) => {
   const CartEntity = await getCartEntity(4221); // calls the getCartEntity function with the correct userID
