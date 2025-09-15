@@ -1,5 +1,5 @@
 // Import AVA framework
-const test = require('ava');
+ const test = require('ava');
 
 // Import service functions from Cart service
 const { cartEntity } = require('../service/CartService.js'); 
